@@ -36,9 +36,9 @@ const Modal = (props) => {
 
 Modal.propTypes = {
   details: PropTypes.shape({
-    children: PropTypes.node,
-    onClose: PropTypes.func
-  }),
+    children: PropTypes.node.isRequired,
+    onClose: PropTypes.func.isRequired
+  }).isRequired,
 };
 
 export default Modal;

@@ -21,28 +21,29 @@ const AppHeader = () => {
             type="secondary"
             extraClass="pl-5 pr-5 mt-4 mb-4"
           >
-            <div className={`${styles.navButton}`}>
+            <a href="#" className={`${styles.navButton}`}>
+              
               <BurgerIcon type="primary" />
               <span
                 className={`text text_type_main-default text_color_primary`}
               >
                 Конструктор
               </span>
-            </div>
+            </a>
           </Button>
           <Button
             htmlType="button"
             type="secondary"
             extraClass="pl-5 pr-5 mt-4 mb-4"
           >
-            <div className={`${styles.navButton}`}>
+            <a href="#" className={`${styles.navButton}`}>
               <ListIcon type="secondary" />
               <span
                 className={`text text_type_main-default text_color_inactive`}
               >
                 Лента заказов
               </span>
-            </div>
+            </a>
           </Button>
         </div>
         <div className={`${styles.logo}`}>
@@ -54,14 +55,14 @@ const AppHeader = () => {
             type="secondary"
             extraClass="pl-5 pr-5 mt-4 mb-4"
           >
-            <div className={`${styles.navButton}`}>
+            <a href="#" className={`${styles.navButton}`}>
               <ProfileIcon type="secondary" />
               <span
                 className={`text text_type_main-default text_color_inactive`}
               >
                 Личный кабинет
               </span>
-            </div>
+            </a>
           </Button>
         </div>
       </nav>

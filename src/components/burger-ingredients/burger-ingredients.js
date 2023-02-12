@@ -8,15 +8,19 @@ import appStyles from "../app/app.module.css";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
+import {burgerIngredientsPropTypes} from "../../utils/prop-types";
 
 const BurgerIngredients = (props) => {
   const { burgerIngredients } = props;
+
   const bunList = burgerIngredients
     .filter((elem) => elem.type === "bun")
     .map((elem) => ({ ...elem, counter: 0 }));
+
   const sauceList = burgerIngredients
     .filter((elem) => elem.type === "sauce")
     .map((elem) => ({ ...elem, counter: 0 }));
+
   const mainList = burgerIngredients
     .filter((elem) => elem.type === "main")
     .map((elem) => ({ ...elem, counter: 0 }));
@@ -29,6 +33,7 @@ const BurgerIngredients = (props) => {
     setModalVisible(true);
     setCurrentIngredient(ingredient);
   };
+  
   const handleCloseModal = () => setModalVisible(false);
 
   return (
@@ -94,22 +99,7 @@ const BurgerIngredients = (props) => {
 };
 
 BurgerIngredients.propTypes = {
-  burgerIngredients: PropTypes.PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    })
-  ),
+  burgerIngredients: burgerIngredientsPropTypes,
 };
 
 export default BurgerIngredients;

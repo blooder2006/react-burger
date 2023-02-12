@@ -10,7 +10,7 @@ const IngredientDetails = (props) => {
   return (
     <div className={`${styles.ingredientDetailsMain} mt-25 pt-1 `}>
 
-      <img className={`mb-4`} src={image_large} />
+      <img className={`mb-4`} src={image_large} alt="ingredient" />
       <div className={`text text_type_main-medium mb-8`}>{name}</div>
       <div className={`${styles.detailsParams} text text_color_inactive mb-15`}>
         <div className={`mr-5`}>
@@ -68,13 +68,13 @@ const IngredientDetails = (props) => {
 
 IngredientDetails.propTypes = {
   details: PropTypes.shape({
-    name: PropTypes.string,
-    image_large: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-  }),
+    name: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    calories: PropTypes.number.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default IngredientDetails;

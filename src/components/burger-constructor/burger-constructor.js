@@ -12,6 +12,7 @@ import styles from "./burger-constructor.module.css";
 import appStyles from "../app/app.module.css";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import {burgerIngredientsPropTypes} from "../../utils/prop-types";
 
 const BurgerConstructor = (props) => {
   const { selectedIngredients } = props;
@@ -93,22 +94,7 @@ const BurgerConstructor = (props) => {
 };
 
 BurgerConstructor.propTypes = {
-  selectedIngredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    })
-  ),
+  selectedIngredients: burgerIngredientsPropTypes,
 };
 
 export default BurgerConstructor;

@@ -6,35 +6,48 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
-const DATA_URL = "https://norma.nomoreparties.space/api/ingredients"
+const DATA_URL = "https://norma.nomoreparties.space/api/ingredients";
 
 const App = () => {
   const [state, setState] = React.useState({
     ingredientsData: null,
     loading: false,
+    error: null
   });
+
+  const checkReponse = (res) => {
+    return res.ok
+      ? res.json()
+      : res.json().then((err) => {
+          Promise.reject(err);
+          setState({ ...state, error: err.message });
+        });
+  };
 
   React.useEffect(() => {
     setState({ ...state, loading: true });
+
     fetch(DATA_URL)
-      .then((res) => res.json())
+      .then(checkReponse)
       .then((dataJson) => {
         setState({ ingredientsData: dataJson.data, loading: false });
       })
       .catch((e) => {
-        console.log("Ошибка:");
-        console.log(e.message);
+        setState({ ...state, error: e.message });
       });
   }, []);
 
   return (
-    <div>     
+    <div>
       <AppHeader />
       <div className={styles.container}>
         {state.ingredientsData && (
           <>
             <BurgerIngredients burgerIngredients={state.ingredientsData} />
-            <BurgerConstructor className={styles.item} selectedIngredients={state.ingredientsData}/>
+            <BurgerConstructor
+              className={styles.item}
+              selectedIngredients={state.ingredientsData}
+            />
           </>
         )}
       </div>

@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+}
+
+.container {
+  width: 1240px;
+  display: grid;
+  grid-template-columns: 600px 600px;
+  gap: 40px;
+  margin: auto;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid #8585ad;
+  background: #8585ad;
+}
+
+.modal {
+  overflow: hidden;
+}
+
+.alignRight {
+  text-align: right;
+}
+

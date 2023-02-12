@@ -1,0 +1,24 @@
+.ingredientDetailsMain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.detailsHeader {
+    height: 64px;
+    width: 640px;
+    display: flex;
+    align-items: center;
+}
+
+.detailsParams {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paramCenterAlign {
+    text-align: center;
+    min-width: 112px;
+}

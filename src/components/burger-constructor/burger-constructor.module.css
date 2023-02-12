@@ -1,0 +1,28 @@
+  .ingredientList {
+    overflow-y: scroll;
+    height: calc(100vh - 268px - 184px - 84px);
+  }
+
+  .innerIngredient {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    text-align: right;
+    justify-content: right;
+  }
+
+  .totalOrder {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    text-align: right;
+    justify-content: right;
+  }
+
+  .totalPriceIcon {
+    -ms-transform: scale(1.375); /* IE 9 */
+    transform: scale(1.375);
+    display: inline-block;
+  }
+
+

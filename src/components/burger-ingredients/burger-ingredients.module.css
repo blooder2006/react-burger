@@ -1,0 +1,15 @@
+.ingredientsContaner {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 24px;
+  row-gap: 32px;
+}
+
+.tabs {
+  display: flex;
+}
+
+.ingredientList {
+  overflow-y: scroll;
+  height: calc(100vh - 284px);
+}

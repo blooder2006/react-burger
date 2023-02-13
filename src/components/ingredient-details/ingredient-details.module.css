@@ -3,13 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.detailsHeader {
-    height: 64px;
-    width: 640px;
-    display: flex;
-    align-items: center;
+    width: 520px;
 }
 
 .detailsParams {

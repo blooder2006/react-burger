@@ -1,0 +1,17 @@
+.priceAndIcon {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ingredient {
+    text-align: center;
+    width: 272px;
+    position: relative;
+  }
+  
+  .ingredientName {
+    text-align: center;
+    min-height: 48px;
+  }

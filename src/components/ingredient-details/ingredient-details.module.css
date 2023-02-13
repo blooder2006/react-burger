@@ -1,0 +1,18 @@
+.ingredientDetailsMain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 520px;
+}
+
+.detailsParams {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paramCenterAlign {
+    text-align: center;
+    min-width: 112px;
+}

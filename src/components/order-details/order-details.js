@@ -3,12 +3,14 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./order-details.module.css";
 import detailsLogo from "../../images/details-logo.svg";
+import { orderContext } from "../../utils/order-context";
 
 const OrderDetails = () => {
+  const orderNumber = React.useContext(orderContext);
   return (
     <div className={`${styles.orderDetailsMain} mt-30`}>
       <div className={`${styles.digitsShadow} text_type_digits-large mb-8`}>
-        034536
+        {orderNumber}
       </div>
       <div className={`text text_type_main-medium mb-15`}>
         идентификатор заказа

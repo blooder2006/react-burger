@@ -12,16 +12,16 @@ import styles from "./burger-constructor.module.css";
 import appStyles from "../app/app.module.css";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { constructorIngredientsContext } from "../../utils/constructor-ingredients-context";
+import { ConstructorIngredientsContext } from "../../utils/constructor-ingredients-context";
 import { ORDER_URL } from "../../utils/urls";
 import { checkReponse } from "../../utils/check-response";
-import { orderContext } from "../../utils/order-context";
+import { OrderContext } from "../../utils/order-context";
 
 
 
 const BurgerConstructor = () => {
   const { selectedIngredients, selectedBun, totalPrice } = React.useContext(
-    constructorIngredientsContext
+    ConstructorIngredientsContext
   );
 
   
@@ -101,7 +101,7 @@ const BurgerConstructor = () => {
       <div className={`${appStyles.alignRight} mr-4`}>
         <ConstructorElement
           key={selectedBun._id}
-          type="top"
+          type="bottom"
           isLocked={true}
           text={`${selectedBun.name}  (низ)`}
           price={selectedBun.price}
@@ -127,11 +127,9 @@ const BurgerConstructor = () => {
       <div className={`${appStyles.modal}`}>
         {modalVisible && (
           <Modal onClose={handleCloseModal}>
-            <orderContext.Provider
-              value={responseState.orderNumber}
-            >
+            <OrderContext.Provider value={responseState.orderNumber}>
               <OrderDetails />
-            </orderContext.Provider>
+            </OrderContext.Provider>
           </Modal>
         )}
       </div>
@@ -139,7 +137,7 @@ const BurgerConstructor = () => {
   );
 };
 
-orderContext.Provider.propTypes = PropTypes.shape({
+OrderContext.Provider.propTypes = PropTypes.shape({
   children: PropTypes.element.isRequired,
   value: PropTypes.number.isRequired
 }).isRequired;

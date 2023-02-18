@@ -3,10 +3,10 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./order-details.module.css";
 import detailsLogo from "../../images/details-logo.svg";
-import { orderContext } from "../../utils/order-context";
+import { OrderContext } from "../../utils/order-context";
 
 const OrderDetails = () => {
-  const orderNumber = React.useContext(orderContext);
+  const orderNumber = React.useContext(OrderContext);
   return (
     <div className={`${styles.orderDetailsMain} mt-30`}>
       <div className={`${styles.digitsShadow} text_type_digits-large mb-8`}>

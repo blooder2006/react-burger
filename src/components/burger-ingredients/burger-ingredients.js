@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
@@ -8,10 +7,12 @@ import appStyles from "../app/app.module.css";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
-import {burgerIngredientsPropTypes} from "../../utils/prop-types";
+import { AllIngredientsContext } from "../../utils/all-ingredients-context";
 
-const BurgerIngredients = (props) => {
-  const { burgerIngredients } = props;
+const BurgerIngredients = () => {
+  const burgerIngredients = React.useContext(
+    AllIngredientsContext
+  );
 
   const bunList = burgerIngredients
     .filter((elem) => elem.type === "bun")
@@ -96,10 +97,6 @@ const BurgerIngredients = (props) => {
       </div>
     </div>
   );
-};
-
-BurgerIngredients.propTypes = {
-  burgerIngredients: burgerIngredientsPropTypes,
 };
 
 export default BurgerIngredients;

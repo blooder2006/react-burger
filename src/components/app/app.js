@@ -7,9 +7,11 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
-import { constructorIngredientsContext } from "../../utils/constructor-ingredients-context";
+import { ConstructorIngredientsContext } from "../../utils/constructor-ingredients-context";
+import { AllIngredientsContext } from "../../utils/all-ingredients-context";
 import { DATA_URL } from "../../utils/urls";
 import { checkReponse } from "../../utils/check-response";
+import {burgerIngredientsPropTypes} from "../../utils/prop-types";
 
 const App = () => {
   const [state, setState] = React.useState({
@@ -84,12 +86,12 @@ const App = () => {
       <div className={styles.container}>
         {state.ingredientsData && (
           <>
-            <BurgerIngredients burgerIngredients={state.ingredientsData} />
-            <constructorIngredientsContext.Provider
-              value={ingredientsForConstructor}
-            >
+            <AllIngredientsContext.Provider value={state.ingredientsData}>
+              <BurgerIngredients />
+            </AllIngredientsContext.Provider>
+            <ConstructorIngredientsContext.Provider value={ingredientsForConstructor}>
               <BurgerConstructor className={styles.item} />
-            </constructorIngredientsContext.Provider>
+            </ConstructorIngredientsContext.Provider>
           </>
         )}
       </div>
@@ -98,7 +100,9 @@ const App = () => {
 };
 
 
-constructorIngredientsContext.Provider.propTypes = PropTypes.shape({
+ConstructorIngredientsContext.Provider.propTypes = burgerIngredientsPropTypes;
+
+AllIngredientsContext.Provider.propTypes = PropTypes.shape({
   selectedIngredients: PropTypes.array.isRequired,
   selectedBun: PropTypes.object.isRequired,
   totalPrice: PropTypes.number.isRequired,

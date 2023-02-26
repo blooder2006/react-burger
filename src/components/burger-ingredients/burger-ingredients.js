@@ -3,39 +3,49 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./burger-ingredients.module.css";
-import appStyles from "../app/app.module.css";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
-import { AllIngredientsContext } from "../../utils/all-ingredients-context";
+
+import { useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
-  const burgerIngredients = React.useContext(
-    AllIngredientsContext
-  );
-
-  const bunList = burgerIngredients
-    .filter((elem) => elem.type === "bun")
-    .map((elem) => ({ ...elem, counter: 0 }));
-
-  const sauceList = burgerIngredients
-    .filter((elem) => elem.type === "sauce")
-    .map((elem) => ({ ...elem, counter: 0 }));
-
-  const mainList = burgerIngredients
-    .filter((elem) => elem.type === "main")
-    .map((elem) => ({ ...elem, counter: 0 }));
+  const { bunList, sauceList, mainList } = useSelector((store) => ({
+    bunList: store.burgerIngredientsReducer.bunList,
+    sauceList: store.burgerIngredientsReducer.sauceList,
+    mainList: store.burgerIngredientsReducer.mainList,
+  }));
 
   const [currentTab, setCurrentTab] = React.useState("bun");
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [currentIngredient, setCurrentIngredient] = React.useState(null);
 
-  const handleOpenModal = (ingredient) => {
-    setModalVisible(true);
-    setCurrentIngredient(ingredient);
+  const bunRef = React.useRef();
+  const sauceRef = React.useRef();
+  const mainRef = React.useRef();
+
+  const callBackFunction = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setCurrentTab(entry.target.getAttribute("id"));
+      }
+    });
   };
-  
-  const handleCloseModal = () => setModalVisible(false);
+
+  React.useEffect(() => {
+    const options = {
+      rootMargin: "0px 0px -60% 0px",
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver(callBackFunction, options);
+
+    if (mainRef.current) observer.observe(mainRef.current);
+    if (sauceRef.current) observer.observe(sauceRef.current);
+    if (bunRef.current) observer.observe(bunRef.current);
+
+    return () => {
+      if (bunRef.current) observer.unobserve(bunRef.current);
+      if (sauceRef.current) observer.unobserve(sauceRef.current);
+      if (mainRef.current) observer.unobserve(mainRef.current);
+    };
+  }, []);
 
   return (
     <div>
@@ -43,57 +53,61 @@ const BurgerIngredients = () => {
         Соберите бургер
       </h1>
       <div className={`${styles.tabs}`}>
-        <Tab value="bun" active={currentTab === "bun"} onClick={setCurrentTab}>
+        <Tab value="bun" active={currentTab === "bun"}>
           Булки
         </Tab>
-        <Tab value="sauce" active={currentTab === "sauce"} onClick={setCurrentTab}>
+        <Tab value="sauce" active={currentTab === "sauce"}>
           Соусы
         </Tab>
-        <Tab value="main" active={currentTab === "main"} onClick={setCurrentTab}>
+        <Tab value="main" active={currentTab === "main"}>
           Начинки
         </Tab>
       </div>
       <div className={`${styles.ingredientList}`}>
-        <p className={`text text_type_main-medium mt-10`}>Булки</p>
+        <p id="bun" ref={bunRef} className={`text text_type_main-medium mt-10`}>
+          Булки
+        </p>
         <div className={`${styles.ingredientsContaner} ml-4 mt-6 mb-10`}>
-          {bunList.map((elem, index) => (
+          {bunList.map((elem) => (
             <Ingredient
-              onClick={handleOpenModal}
               ingredient={elem}
               key={elem._id}
-              counter={index === 0 ? 1 : elem.counter}
+              counter={elem.counter}
             />
           ))}
         </div>
-        <p className={`text text_type_main-medium mt-10`}>Соусы</p>
+        <p
+          id="sauce"
+          ref={sauceRef}
+          className={`text text_type_main-medium mt-10`}
+        >
+          Соусы
+        </p>
         <div className={`${styles.ingredientsContaner} ml-4 mt-6 mb-10`}>
           {sauceList.map((elem) => (
             <Ingredient
-              onClick={handleOpenModal}
               ingredient={elem}
               key={elem._id}
               counter={elem.counter}
             />
           ))}
         </div>
-        <p className={`text text_type_main-medium mt-10`}>Начинки</p>
+        <p
+          id="main"
+          ref={mainRef}
+          className={`text text_type_main-medium mt-10`}
+        >
+          Начинки
+        </p>
         <div className={`${styles.ingredientsContaner} ml-4 mt-6 mb-10`}>
           {mainList.map((elem) => (
             <Ingredient
-              onClick={handleOpenModal}
               ingredient={elem}
               key={elem._id}
               counter={elem.counter}
             />
           ))}
         </div>
-      </div>
-      <div className={`${appStyles.modal}`}>
-        {modalVisible && (
-          <Modal onClose={handleCloseModal} header=" Детали ингредиента"> 
-            <IngredientDetails details={currentIngredient} />
-          </Modal>
-        )}
       </div>
     </div>
   );

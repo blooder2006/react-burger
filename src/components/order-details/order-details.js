@@ -7,9 +7,7 @@ import detailsLogo from "../../images/details-logo.svg";
 import { useSelector } from "react-redux";
 
 const OrderDetails = () => {
-  const { orderNumber } = useSelector((store) => ({
-    orderNumber: store.orderReducer.orderNumber,
-  }));
+  const { orderNumber } = useSelector((store) => store.orderReducer);
 
   return (
     <div className={`${styles.orderDetailsMain} mt-30`}>
@@ -22,7 +20,7 @@ const OrderDetails = () => {
       <img
         className={`${styles.imageOrderDetails} mb-15`}
         src={detailsLogo}
-        alt="logo"
+        alt="order logo"
       />
       <div className={`text text_type_main-default mb-2`}>
         Ваш заказ начали готовить

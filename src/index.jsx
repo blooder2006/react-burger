@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { compose, createStore, applyMiddleware } from 'redux';
-import { rootReducer } from './components/services/reducers/root-reducer';
+import { rootReducer } from './services/reducers/root-reducer';
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

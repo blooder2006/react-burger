@@ -8,11 +8,9 @@ import Ingredient from "../ingredient/ingredient";
 import { useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
-  const { bunList, sauceList, mainList } = useSelector((store) => ({
-    bunList: store.burgerIngredientsReducer.bunList,
-    sauceList: store.burgerIngredientsReducer.sauceList,
-    mainList: store.burgerIngredientsReducer.mainList,
-  }));
+  const { bunList, sauceList, mainList } = useSelector(
+    (store) => store.burgerIngredientsReducer
+  );
 
   const [currentTab, setCurrentTab] = React.useState("bun");
 

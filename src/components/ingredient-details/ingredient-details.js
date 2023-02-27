@@ -6,15 +6,13 @@ import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
 
 const IngredientDetails = () => {
-  const { details } = useSelector((store) => ({
-    details: store.modalReducer.details,
-  }));
+  const { details } = useSelector((store) => store.modalReducer);
 
   const { name, image_large, calories, proteins, fat, carbohydrates } = details;
 
   return (
     <div className={`${styles.ingredientDetailsMain} mt-25 pt-1 `}>
-      <img className={`mb-4`} src={image_large} alt="ingredient" />
+      <img className={`mb-4`} src={image_large} alt={name} />
       <div className={`text text_type_main-medium mb-8`}>{name}</div>
       <div className={`${styles.detailsParams} text text_color_inactive mb-15`}>
         <div className={`mr-5`}>

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   ConstructorElement,
   DragIcon,
@@ -14,14 +15,13 @@ import {
   DEL_COMPONENT,
   CALC_SAUCE_COUNTER,
   CALC_MAIN_COUNTER,
-} from "../services/actions/actions";
+} from "../../services/actions/actions";
 
 export default function ConstructorElementWrapper({ item, index, moveCard }) {
   const dispatch = useDispatch();
-  const { sauceList, mainList } = useSelector((store) => ({
-    sauceList: store.burgerIngredientsReducer.sauceList,
-    mainList: store.burgerIngredientsReducer.mainList,
-  }));
+  const { sauceList, mainList } = useSelector(
+    (store) => store.burgerIngredientsReducer
+  );
 
   const ref = React.useRef(null);
   const [{ handlerId }, drop] = useDrop({
@@ -126,3 +126,9 @@ export default function ConstructorElementWrapper({ item, index, moveCard }) {
     </div>
   );
 }
+
+ConstructorElementWrapper.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  moveCard: PropTypes.func.isRequired,
+};

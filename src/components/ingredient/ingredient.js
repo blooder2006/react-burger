@@ -9,7 +9,7 @@ import { ingredientsPropTypes } from "../../utils/prop-types";
 
 import { useDispatch } from "react-redux";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { SHOW_MODAL } from "../services/actions/actions";
+import { SHOW_MODAL } from "../../services/actions/actions";
 
 import { useDrag } from "react-dnd";
 

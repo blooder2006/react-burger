@@ -1,2 +1,3 @@
-export const DATA_URL = "https://norma.nomoreparties.space/api/ingredients";
-export const ORDER_URL = "https://norma.nomoreparties.space/api/orders"; 
+export const DATA_ENDPOINT = "/ingredients";
+export const ORDER_ENDPOINT = "/orders";
+export const BASE_URL = "https://norma.nomoreparties.space/api"; 

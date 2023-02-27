@@ -1,111 +1,75 @@
 import React from "react";
 import styles from "./app.module.css";
-import PropTypes from "prop-types";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
-
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import Modal from "../modal/modal";
 
-import { ConstructorIngredientsContext } from "../../utils/constructor-ingredients-context";
-import { AllIngredientsContext } from "../../utils/all-ingredients-context";
-import { DATA_URL } from "../../utils/urls";
-import { checkReponse } from "../../utils/check-response";
-import {burgerIngredientsPropTypes} from "../../utils/prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllIngredients } from "../../services/actions/actions";
+import { BASE_URL, DATA_ENDPOINT } from "../../utils/urls";
+import { FILL_INGREDIENTS_LIST } from "../../services/actions/actions";
+
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const App = () => {
-  const [state, setState] = React.useState({
-    ingredientsData: null,
-    loading: false,
-    error: null,
-  });
+  const dispatch = useDispatch();
 
-  const initialIngredientsForConstructor = {
-    selectedIngredients: [],
-    selectedBun: {},
-    totalPrice: 0,
-  };
-
-  function reducer(state, action) {
-    switch (action.type) {
-      case "changeIngredients":
-        return { ...state, selectedIngredients: action.payload };
-      case "changeIngredientsBun":
-        return { ...state, selectedBun: action.payload };
-      case "changeTotalPrice":
-        return { ...state, totalPrice: action.payload };
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
-    }
-  }
-
-  const [ingredientsForConstructor, dispatch] = React.useReducer(
-    reducer,
-    initialIngredientsForConstructor
+  const { allIngredients } = useSelector(
+    (store) => store.getAllIngredientsReducer
   );
 
-  React.useEffect(() => {
-    setState({ ...state, loading: true });
+  const { modalVisible } = useSelector((store) => store.modalReducer);
 
-    fetch(DATA_URL)
-      .then((res) => checkReponse(res, state, setState))
-      .then((dataJson) => 
-        
-        setState({ ingredientsData: dataJson.data, loading: false })
-     )
-      .catch((e) => {
-        setState({ ...state, error: e.message });
-      });
+  React.useEffect(() => {
+    dispatch(getAllIngredients(`${BASE_URL}${DATA_ENDPOINT}`));
   }, []);
 
   React.useEffect(() => {
-    if (state.ingredientsData) {
-      const selectedIngredients = state.ingredientsData.filter(
-        (elem) => elem.type !== "bun"
-      );
+    if (allIngredients.length > 0) {
+      const bunList = allIngredients
+        .filter((elem) => elem.type === "bun")
+        .map((elem) => ({ ...elem, counter: 0 }));
 
-      dispatch({ type: "changeIngredients", payload: selectedIngredients });
+      const sauceList = allIngredients
+        .filter((elem) => elem.type === "sauce")
+        .map((elem) => ({ ...elem, counter: 0 }));
 
-      const selectedBun = state.ingredientsData.filter(
-        (elem) => elem.type === "bun"
-      )[0];
-      dispatch({ type: "changeIngredientsBun", payload: selectedBun });
+      const mainList = allIngredients
+        .filter((elem) => elem.type === "main")
+        .map((elem) => ({ ...elem, counter: 0 }));
 
-      let totalPrice = 0;
-      selectedIngredients.forEach((elem) => {
-        totalPrice = totalPrice + elem.price;
+      dispatch({
+        type: FILL_INGREDIENTS_LIST,
+        bunList: bunList,
+        sauceList: sauceList,
+        mainList: mainList,
       });
-      totalPrice = totalPrice + selectedBun.price * 2;
-      dispatch({ type: "changeTotalPrice", payload: totalPrice });
     }
-  }, [state.ingredientsData]);
+  }, [allIngredients]);
 
   return (
     <div>
       <AppHeader />
-      <div className={styles.container}>
-        {state.ingredientsData && (
+      <main className={styles.container}>
+        {allIngredients && (
           <>
-            <AllIngredientsContext.Provider value={state.ingredientsData}>
+            <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
-            </AllIngredientsContext.Provider>
-            <ConstructorIngredientsContext.Provider value={ingredientsForConstructor}>
-              <BurgerConstructor className={styles.item} />
-            </ConstructorIngredientsContext.Provider>
+              <BurgerConstructor />
+            </DndProvider>
+            {modalVisible && (
+              <div className={`${styles.modal}`}>
+                <Modal />
+              </div>
+            )}
           </>
         )}
-      </div>
+      </main>
     </div>
   );
 };
-
-
-ConstructorIngredientsContext.Provider.propTypes = burgerIngredientsPropTypes;
-
-AllIngredientsContext.Provider.propTypes = PropTypes.shape({
-  selectedIngredients: PropTypes.array.isRequired,
-  selectedBun: PropTypes.object.isRequired,
-  totalPrice: PropTypes.number.isRequired,
-}).isRequired;
 
 export default App;

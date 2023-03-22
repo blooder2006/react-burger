@@ -1,10 +1,16 @@
-import { SHOW_MODAL, HIDE_MODAL } from "../actions/actions";
+import {
+  SHOW_MODAL,
+  HIDE_MODAL,
+  SHOW_MODAL_WITH_NAV_STEP,
+  SET_DETAILS,
+} from "../actions/actions";
 
 const initialState = {
   modalVisible: false,
   header: "",
   modalContent: {},
   details: null,
+  useNavBackStep: false,
 };
 
 export const modalReducer = (state = initialState, action) => {
@@ -16,6 +22,17 @@ export const modalReducer = (state = initialState, action) => {
         header: action.header,
         modalContent: action.modalContent,
         details: action.details,
+        useNavBackStep: false,
+      };
+    }
+    case SHOW_MODAL_WITH_NAV_STEP: {
+      return {
+        ...state,
+        modalVisible: true,
+        header: action.header,
+        modalContent: action.modalContent,
+        details: action.details,
+        useNavBackStep: true,
       };
     }
     case HIDE_MODAL: {
@@ -25,6 +42,13 @@ export const modalReducer = (state = initialState, action) => {
         header: "",
         modalContent: {},
         details: null,
+        useNavBackStep: false,
+      };
+    }
+    case SET_DETAILS: {
+      return {
+        ...state,
+        details: action.details,
       };
     }
     default: {

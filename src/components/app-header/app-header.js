@@ -10,8 +10,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
+import { useLocation } from "react-router-dom";
 
 const AppHeader = () => {
+  const location = useLocation();
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -21,11 +24,16 @@ const AppHeader = () => {
             type="secondary"
             extraClass="pl-5 pr-5 mt-4 mb-4"
           >
-            <a href="#" className={`${styles.navButton}`}>
-              
-              <BurgerIcon type="primary" />
+            <a href="/" className={`${styles.navButton}`}>
+              <BurgerIcon
+                type={location.pathname === "/" ? "primary" : "secondary"}
+              />
               <span
-                className={`text text_type_main-default text_color_primary`}
+                className={`text text_type_main-default ${
+                  location.pathname === "/"
+                    ? "text_color_primary"
+                    : "text_color_inactive"
+                }`}
               >
                 Конструктор
               </span>
@@ -55,10 +63,20 @@ const AppHeader = () => {
             type="secondary"
             extraClass="pl-5 pr-5 mt-4 mb-4"
           >
-            <a href="#" className={`${styles.navButton}`}>
-              <ProfileIcon type="secondary" />
+            <a href="/profile" className={`${styles.navButton}`}>
+              <ProfileIcon
+                type={
+                  location.pathname.includes("/profile")
+                    ? "primary"
+                    : "secondary"
+                }
+              />
               <span
-                className={`text text_type_main-default text_color_inactive`}
+                className={`text text_type_main-default ${
+                  location.pathname.includes("/profile")
+                    ? "text_color_primary"
+                    : "text_color_inactive"
+                }`}
               >
                 Личный кабинет
               </span>

@@ -16,3 +16,26 @@
     text-align: center;
     min-width: 112px;
 }
+
+.header {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    position: absolute;   
+    top: 0;
+}
+
+.headerLeft {
+    left: 0;
+}
+
+.pageContainer {
+    width: 720px; 
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

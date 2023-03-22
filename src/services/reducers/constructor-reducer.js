@@ -4,7 +4,7 @@ import {
   ADD_COMPONENT,
   DEL_COMPONENT,
   ADD_BUN,
-} from "../actions/actions";
+} from "../actions/ingredients-actions";
 
 const initialState = {
   selectedIngredients: [],

@@ -3,7 +3,7 @@ import {
   HIDE_MODAL,
   SHOW_MODAL_WITH_NAV_STEP,
   SET_DETAILS,
-} from "../actions/actions";
+} from "../actions/modal-actions";
 
 const initialState = {
   modalVisible: false,

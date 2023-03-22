@@ -9,16 +9,13 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 
 import styles from "./pages.module.css";
-import {
-  postLogout,
-  DEL_USER_INFO,
-  patchUser,
-} from "../services/actions/actions";
+import { postLogout } from "../services/actions/auth-actions";
+import { DEL_USER_INFO, patchUser } from "../services/actions/user-actions";
 import { BASE_URL, LOGOUT_ENDPOINT, USER_INFO_ENDPOINT } from "../utils/urls";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteCookie } from "../utils/auth";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 export const ProfilePage = () => {
   const location = useLocation();
@@ -26,7 +23,6 @@ export const ProfilePage = () => {
   const [userEmail, setUserEmail] = React.useState("");
   const [userName, setUserName] = React.useState("");
   const [buttonsAreHidden, setButtonsAreHidden] = React.useState(true);
-  const { loading, error } = useSelector((store) => store.loginLogoutReducer);
   const { userProfile } = useSelector((store) => store.profileReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -93,25 +89,31 @@ export const ProfilePage = () => {
     dispatch(patchUser(`${BASE_URL}${USER_INFO_ENDPOINT}`, userAttrs));
   };
 
-  const handleExitClick = () => {
-    const logoutToken = localStorage.getItem("refreshToken");
-    dispatch(postLogout(`${BASE_URL}${LOGOUT_ENDPOINT}`, logoutToken));
-    if (!loading && !error) {
-      dispatch({
-        type: DEL_USER_INFO,
-      });
-      deleteCookie("accessToken");
-      localStorage.removeItem("refreshToken");
-      navigate("/login", { replace: true });
-    }
+  const logoutAndDelUserInfo = (logoutToken) => {
+    return (dispatch) => {
+      dispatch(postLogout(`${BASE_URL}${LOGOUT_ENDPOINT}`, logoutToken)).then(
+        () => {
+          dispatch({ type: DEL_USER_INFO });
+          deleteCookie("accessToken");
+          localStorage.removeItem("refreshToken");
+          navigate("/", { replace: true });
+        }
+      );
+    };
+  };
+
+  const handleExitClick = (e) => {
+    e.preventDefault();
+    const logoutToken = { token: localStorage.getItem("refreshToken") };
+    dispatch(logoutAndDelUserInfo(logoutToken));
   };
 
   return (
     <>
       <div className={`${styles.profileTabs}`}>
         <div className={`${styles.profileTab}`}>
-          <a
-            href="/profile"
+          <Link
+            to={{ pathname: `/profile` }}
             className={`${styles.tabLink} text text_type_main-medium ${
               location.pathname === "/profile"
                 ? "text_color_primary"
@@ -119,11 +121,11 @@ export const ProfilePage = () => {
             }`}
           >
             Профиль
-          </a>
+          </Link>
         </div>
         <div className={`${styles.profileTab}`}>
-          <a
-            href="/profile/orders"
+          <Link
+            to={{ pathname: `/profile/orders` }}
             className={`${styles.tabLink} text text_type_main-medium ${
               location.pathname.includes("/profile/orders")
                 ? "text_color_primary"
@@ -131,16 +133,16 @@ export const ProfilePage = () => {
             }`}
           >
             История заказов
-          </a>
+          </Link>
         </div>
         <div className={`${styles.profileTab} mb-20`}>
-          <a
-            href=""
+          <Link
+            to={{ pathname: `/` }}
             className={`${styles.tabLink} text text_type_main-medium text_color_inactive`}
             onClick={handleExitClick}
           >
             Выход
-          </a>
+          </Link>
         </div>
         <p className="text text_type_main-default text_color_inactive">
           В этом разделе вы можете изменить свои персональные данные
@@ -193,10 +195,7 @@ export const ProfilePage = () => {
                   </Button>
                 </div>
                 <div>
-                  <Button
-                    htmlType="submit"
-                    type="primary"                   
-                  >
+                  <Button htmlType="submit" type="primary">
                     Сохранить
                   </Button>
                 </div>

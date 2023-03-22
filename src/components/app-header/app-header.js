@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./app-header.module.css";
-import appStyles from "../app/app.module.css";
+
 import {
   Logo,
   BurgerIcon,
@@ -10,7 +10,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 const AppHeader = () => {
   const location = useLocation();
@@ -18,13 +18,16 @@ const AppHeader = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <div>
-          <Button
-            htmlType="button"
-            type="secondary"
-            extraClass="pl-5 pr-5 mt-4 mb-4"
+        <div className={`${styles.flexContainer}`}>
+          <Link
+            to={{ pathname: `/` }}
+            className={`${styles.flexLink} mt-4 mb-4`}
           >
-            <a href="/" className={`${styles.navButton}`}>
+            <Button
+              htmlType="button"
+              type="secondary"
+              extraClass={`${styles.navButton} pl-5 pr-5 pt-4 pb-4`}
+            >
               <BurgerIcon
                 type={location.pathname === "/" ? "primary" : "secondary"}
               />
@@ -37,33 +40,39 @@ const AppHeader = () => {
               >
                 Конструктор
               </span>
-            </a>
-          </Button>
-          <Button
-            htmlType="button"
-            type="secondary"
-            extraClass="pl-5 pr-5 mt-4 mb-4"
+            </Button>{" "}
+          </Link>
+          <Link
+            to={{ pathname: `/` }}
+            className={`${styles.flexLink} mt-4 mb-4`}
           >
-            <a href="#" className={`${styles.navButton}`}>
+            <Button
+              htmlType="button"
+              type="secondary"
+              extraClass={`${styles.navButton} pl-5 pr-5 pt-4 pb-4`}
+            >
               <ListIcon type="secondary" />
               <span
                 className={`text text_type_main-default text_color_inactive`}
               >
                 Лента заказов
               </span>
-            </a>
-          </Button>
+            </Button>
+          </Link>
         </div>
         <div className={`${styles.logo}`}>
           <Logo />
         </div>
-        <div className={`${appStyles.alignRight}`}>
-          <Button
-            htmlType="button"
-            type="secondary"
-            extraClass="pl-5 pr-5 mt-4 mb-4"
+        <div className={`${styles.flexRight}`}>
+          <Link
+            to={{ pathname: `/profile` }}
+            className={`${styles.flexLink} mt-4 mb-4`}
           >
-            <a href="/profile" className={`${styles.navButton}`}>
+            <Button
+              htmlType="button"
+              type="secondary"
+              extraClass={`${styles.navButton} pl-5 pr-5 pt-4 pb-4`}
+            >
               <ProfileIcon
                 type={
                   location.pathname.includes("/profile")
@@ -80,8 +89,8 @@ const AppHeader = () => {
               >
                 Личный кабинет
               </span>
-            </a>
-          </Button>
+            </Button>{" "}
+          </Link>
         </div>
       </nav>
     </header>

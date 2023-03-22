@@ -10,11 +10,10 @@ import styles from "./burger-constructor.module.css";
 import appStyles from "../app/app.module.css";
 import OrderDetails from "../order-details/order-details";
 
-import { getOrder } from "../../services/actions/actions";
+import { getOrder } from "../../services/actions/order-actions";
 import { BASE_URL, ORDER_ENDPOINT } from "../../utils/urls";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  SHOW_MODAL,
   ADD_COMPONENT,
   CHANGE_SELECTED_INGREDIENTS,
   CHANGE_TOTAL_PRICE,
@@ -22,8 +21,7 @@ import {
   CALC_BUN_COUNTER,
   CALC_SAUCE_COUNTER,
   CALC_MAIN_COUNTER,
-} from "../../services/actions/actions";
-
+} from "../../services/actions/ingredients-actions";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import ConstructorElementWrapper from "../constructor-element-wrapper/constructor-element-wrapper";
@@ -38,7 +36,7 @@ const BurgerConstructor = () => {
     (store) => store.constructorReducer
   );
 
-  const { modalVisible } = useSelector((store) => store.modalReducer);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   const { bunList, sauceList, mainList } = useSelector(
     (store) => store.burgerIngredientsReducer
@@ -48,7 +46,7 @@ const BurgerConstructor = () => {
     return (dispatch) => {
       dispatch(getOrder(`${BASE_URL}${ORDER_ENDPOINT}`, burgerRequest)).then(
         () => {
-          dispatch({ type: SHOW_MODAL, modalContent: OrderDetails });
+          setModalVisible(true);
         }
       );
     };
@@ -230,8 +228,14 @@ const BurgerConstructor = () => {
         </Button>
       </div>
       {modalVisible && (
-        <div className={`${styles.modal}`}>
-          <Modal />
+        <div className={`${appStyles.modal}`}>
+          <Modal
+            onClose={() => {
+              setModalVisible(false);
+            }}
+          >
+            <OrderDetails />
+          </Modal>
         </div>
       )}
     </div>

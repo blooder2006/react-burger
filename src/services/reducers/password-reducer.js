@@ -5,7 +5,7 @@ import {
   POST_RESET_PSWD_REQUEST,
   POST_RESET_PSWD_SUCCESS,
   POST_RESET_PSWD_FAIL,
-} from "../actions/actions";
+} from "../actions/password-actions";
 
 const initialState = {
   messageForForgot: null,

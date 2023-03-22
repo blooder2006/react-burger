@@ -1,0 +1,4 @@
+export const SHOW_MODAL = "SHOW_MODAL";
+export const HIDE_MODAL = "HIDE_MODAL";
+export const SHOW_MODAL_WITH_NAV_STEP = "SHOW_MODAL_WITH_NAV_STEP";
+export const SET_DETAILS = "SET_DETAILS";

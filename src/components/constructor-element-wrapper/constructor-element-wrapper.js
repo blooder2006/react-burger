@@ -15,7 +15,7 @@ import {
   DEL_COMPONENT,
   CALC_SAUCE_COUNTER,
   CALC_MAIN_COUNTER,
-} from "../../services/actions/actions";
+} from "../../services/actions/ingredients-actions";
 
 export default function ConstructorElementWrapper({ item, index, moveCard }) {
   const dispatch = useDispatch();

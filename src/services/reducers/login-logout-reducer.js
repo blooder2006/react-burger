@@ -5,7 +5,7 @@ import {
   POST_LOGOUT_REQUEST,
   POST_LOGOUT_SUCCESS,
   POST_LOGOUT_FAIL,
-} from "../actions/actions";
+} from "../actions/auth-actions";
 
 const initialState = {
   loading: false,

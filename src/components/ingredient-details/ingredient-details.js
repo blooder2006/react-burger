@@ -4,11 +4,13 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./ingredient-details.module.css";
 
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation } from "react-router-dom";
 
 const IngredientDetails = () => {
   const { id } = useParams();
   const { modalVisible } = useSelector((store) => store.modalReducer);
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   const ingredientFromSearch = useSelector((store) => {
     return store.getAllIngredientsReducer.allIngredients.find(
@@ -25,9 +27,9 @@ const IngredientDetails = () => {
       ingredientFromSearch;
     return (
       <>
-        <div className={modalVisible ? null : `${styles.pageContainer}`}>
+        <div className={background ? null : `${styles.pageContainer}`}>
           <div
-            className={`${!modalVisible ? null : styles.headerLeft} ${
+            className={`${!background ? null : styles.headerLeft} ${
               styles.header
             } text text_type_main-large mr-10 ml-10 mt-10`}
           >

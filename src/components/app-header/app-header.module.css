@@ -6,6 +6,7 @@
 
 .navButton {
     display: flex;
+    flex-direction: row;
     gap: 8px;
     align-items: center;
     justify-content: center;
@@ -25,6 +26,19 @@
     justify-content: center;
   }
 
-.navRightButton {
-    text-align: right;
-  }
+
+.flexContainer{
+  display: flex;
+}
+
+.flexLink{
+  text-decoration: none;
+}
+
+.flexRight{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:flex-end;
+}
+

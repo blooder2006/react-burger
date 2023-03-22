@@ -13,16 +13,16 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getAllIngredients,
-  checkUserAuth,
-} from "../../services/actions/actions";
+import { getAllIngredients } from "../../services/actions/ingredients-actions";
+import { checkUserAuth } from "../../services/actions/user-actions";
 import { BASE_URL, DATA_ENDPOINT } from "../../utils/urls";
-import { FILL_INGREDIENTS_LIST } from "../../services/actions/actions";
+import { FILL_INGREDIENTS_LIST } from "../../services/actions/ingredients-actions";
+import { HIDE_MODAL } from "../../services/actions/modal-actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ProtectedRoute } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found-404";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const { isAuthChecked } = useSelector((store) => store.profileReducer);
@@ -30,7 +30,7 @@ const App = () => {
   const { allIngredients } = useSelector(
     (store) => store.getAllIngredientsReducer
   );
-  const { modalVisible } = useSelector((store) => store.modalReducer);
+
   React.useEffect(() => {
     dispatch(getAllIngredients(`${BASE_URL}${DATA_ENDPOINT}`));
     dispatch(checkUserAuth());
@@ -57,8 +57,16 @@ const App = () => {
   }, [allIngredients]);
 
   const ModalSwitch = () => {
+    const navigate = useNavigate();
+    const handleModalClose = () => {
+      dispatch({
+        type: HIDE_MODAL,
+      });
+      navigate(-1);
+    };
+
     const location = useLocation();
-    let background = location.state && location.state.background;
+    const background = location.state && location.state.background;
 
     return (
       <div>
@@ -133,7 +141,13 @@ const App = () => {
             <Routes>
               <Route
                 path="/ingredients/:id"
-                element={modalVisible && <Modal />}
+                element={
+                  <div className={`${styles.modal}`}>
+                    <Modal onClose={handleModalClose}>
+                      <IngredientDetails />
+                    </Modal>
+                  </div>
+                }
               />
             </Routes>
           )}

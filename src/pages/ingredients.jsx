@@ -6,7 +6,7 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./pages.module.css";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { checkUserAuth } from "../services/actions/actions";
+import { checkUserAuth } from "../services/actions/user-actions";
 
 export const IngredientDetailsPage = () => {
   const dispatch = useDispatch();

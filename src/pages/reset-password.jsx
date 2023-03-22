@@ -10,7 +10,7 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 
 import styles from "./pages.module.css";
 
-import { postResetPassword } from "../services/actions/actions";
+import { postResetPassword } from "../services/actions/password-actions";
 import { BASE_URL, RESET_PSWD_ENDPOINT } from "../utils/urls";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

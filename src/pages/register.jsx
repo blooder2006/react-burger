@@ -11,7 +11,7 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 
 import styles from "./pages.module.css";
 
-import { postRegisterUser } from "../services/actions/actions";
+import { postRegisterUser } from "../services/actions/auth-actions";
 import { BASE_URL, REGISTER_USER_ENDPOINT } from "../utils/urls";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

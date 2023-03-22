@@ -2,7 +2,7 @@ import {
   POST_REGISTER_USER_REQUEST,
   POST_REGISTER_USER_SUCCESS,
   POST_REGISTER_USER_FAIL,
-} from "../actions/actions";
+} from "../actions/auth-actions";
 
 const initialState = {
   loading: false,

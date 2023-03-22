@@ -10,8 +10,9 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 
 import styles from "./pages.module.css";
 
-import { postLogin } from "../services/actions/actions";
-import { BASE_URL, LOGIN_ENDPOINT } from "../utils/urls";
+import { postLogin } from "../services/actions/auth-actions";
+import { getUser } from "../services/actions/user-actions";
+import { BASE_URL, LOGIN_ENDPOINT, USER_INFO_ENDPOINT } from "../utils/urls";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveTokens } from "../utils/auth";
@@ -42,10 +43,18 @@ export const LoginPage = () => {
     }
   };
 
+  const loginAndGetUser = (loginRequest) => {
+    return (dispatch) => {
+      dispatch(postLogin(`${BASE_URL}${LOGIN_ENDPOINT}`, loginRequest)).then(
+        () => dispatch(getUser(`${BASE_URL}${USER_INFO_ENDPOINT}`))
+      );
+    };
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const loginRequest = { password: userPassword, email: userEmail };
-    dispatch(postLogin(`${BASE_URL}${LOGIN_ENDPOINT}`, loginRequest));
+    dispatch(loginAndGetUser(loginRequest));
   };
 
   React.useEffect(() => {
@@ -75,9 +84,7 @@ export const LoginPage = () => {
           />
         </div>
         <div className={`mt-6 mb-20`}>
-          <Button htmlType="submit">
-            Войти
-          </Button>
+          <Button htmlType="submit">Войти</Button>
         </div>
       </form>
       <div className={`${styles.linkBox} mb-4`}>

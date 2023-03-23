@@ -10,11 +10,10 @@ import styles from "./burger-constructor.module.css";
 import appStyles from "../app/app.module.css";
 import OrderDetails from "../order-details/order-details";
 
-import { getOrder } from "../../services/actions/actions";
+import { getOrder } from "../../services/actions/order-actions";
 import { BASE_URL, ORDER_ENDPOINT } from "../../utils/urls";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  SHOW_MODAL,
   ADD_COMPONENT,
   CHANGE_SELECTED_INGREDIENTS,
   CHANGE_TOTAL_PRICE,
@@ -22,24 +21,36 @@ import {
   CALC_BUN_COUNTER,
   CALC_SAUCE_COUNTER,
   CALC_MAIN_COUNTER,
-} from "../../services/actions/actions";
-
+} from "../../services/actions/ingredients-actions";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import ConstructorElementWrapper from "../constructor-element-wrapper/constructor-element-wrapper";
+import Modal from "../modal/modal";
+import { useNavigate } from "react-router-dom";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-
-  const { loading } = useSelector((store) => store.orderReducer);
+  const navigate = useNavigate();
 
   const { selectedIngredients, selectedBun, totalPrice } = useSelector(
     (store) => store.constructorReducer
   );
 
+  const [modalVisible, setModalVisible] = React.useState(false);
+
   const { bunList, sauceList, mainList } = useSelector(
     (store) => store.burgerIngredientsReducer
   );
+
+  const orderAndShowModal = (burgerRequest) => {
+    return (dispatch) => {
+      dispatch(getOrder(`${BASE_URL}${ORDER_ENDPOINT}`, burgerRequest)).then(
+        () => {
+          setModalVisible(true);
+        }
+      );
+    };
+  };
 
   const handleOpenModal = () => {
     const burgerRequest = {
@@ -50,9 +61,12 @@ const BurgerConstructor = () => {
         selectedBun._id,
       ],
     };
-    dispatch(getOrder(`${BASE_URL}${ORDER_ENDPOINT}`, burgerRequest));
-    if (!loading) {
-      dispatch({ type: SHOW_MODAL, modalContent: OrderDetails });
+    const isAuth = localStorage.getItem("refreshToken");
+
+    if (!isAuth) {
+      navigate("/login");
+    } else {
+      dispatch(orderAndShowModal(burgerRequest));
     }
   };
 
@@ -213,6 +227,17 @@ const BurgerConstructor = () => {
           Оформить заказ
         </Button>
       </div>
+      {modalVisible && (
+        <div className={`${appStyles.modal}`}>
+          <Modal
+            onClose={() => {
+              setModalVisible(false);
+            }}
+          >
+            <OrderDetails />
+          </Modal>
+        </div>
+      )}
     </div>
   );
 };

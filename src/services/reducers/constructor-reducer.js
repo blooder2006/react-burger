@@ -1,11 +1,10 @@
 import {
   CHANGE_SELECTED_INGREDIENTS,
-  //CHANGE_SELECTED_BUN,
   CHANGE_TOTAL_PRICE,
   ADD_COMPONENT,
   DEL_COMPONENT,
   ADD_BUN,
-} from "../actions/actions";
+} from "../actions/ingredients-actions";
 
 const initialState = {
   selectedIngredients: [],
@@ -21,12 +20,7 @@ export const constructorReducer = (state = initialState, action) => {
         selectedIngredients: action.payload,
       };
     }
-    /*case CHANGE_SELECTED_BUN: {
-      return {
-        ...state,
-        selectedBun: action.payload,
-      };
-    }*/
+
     case CHANGE_TOTAL_PRICE: {
       return {
         ...state,

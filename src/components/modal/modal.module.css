@@ -1,4 +1,4 @@
-.modal {
+.modalBack {
     width: 720px;
     background: #1C1C21;   
     position: absolute;
@@ -19,13 +19,6 @@
     top: 0;
 }
 
-.modalHeader {
-    height: 64px;
-    width: 580px;
-    display: flex;
-    align-items: center;
-    position: absolute;
-    left: 0;
-    top: 0;
-
+.contaner {
+    overflow: hidden;
 }

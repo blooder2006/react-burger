@@ -1,0 +1,68 @@
+.inputPage {
+    width: 480px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.linkBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+}
+
+.profilePage {
+    width: 480px;
+    position: absolute;
+    left: 50%;
+    top: 228px;
+    transform: translate(-50%, 0%);
+
+}
+
+.profileTabs {
+    width: 320px;
+    position: absolute; 
+    top: 228px;
+    left: 50%;
+    transform: translate(-619px, 0%);
+    display: flex;
+    flex-direction: column;
+
+}
+
+.profileTab {
+    height: 64px;
+}
+
+.tabLink {
+    text-decoration: none;   
+}
+
+.profileInputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottomButtons {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.form {
+    text-align: center;
+}

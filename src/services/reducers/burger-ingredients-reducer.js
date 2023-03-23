@@ -3,7 +3,7 @@ import {
   CALC_BUN_COUNTER,
   CALC_SAUCE_COUNTER,
   CALC_MAIN_COUNTER,
-} from "../actions/actions";
+} from "../actions/ingredients-actions";
 
 const initialState = {
   bunList: [],

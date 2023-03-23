@@ -4,6 +4,10 @@ import { orderReducer } from "./order-reducer";
 import { constructorReducer } from "./constructor-reducer";
 import { modalReducer } from "./modal-reducer";
 import { burgerIngredientsReducer } from "./burger-ingredients-reducer";
+import { passwordReducer } from "./password-reducer";
+import { registerReducer } from "./register-reducer";
+import { loginLogoutReducer } from "./login-logout-reducer";
+import { profileReducer } from "./profile-reducer";
 
 export const rootReducer = combineReducers({
   getAllIngredientsReducer,
@@ -11,4 +15,8 @@ export const rootReducer = combineReducers({
   constructorReducer,
   modalReducer,
   burgerIngredientsReducer,
+  passwordReducer,
+  registerReducer,
+  loginLogoutReducer,
+  profileReducer
 });

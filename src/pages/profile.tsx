@@ -17,15 +17,18 @@ import { useNavigate } from "react-router-dom";
 import { deleteCookie } from "../utils/auth";
 import { useLocation, Link } from "react-router-dom";
 
-export const ProfilePage = () => {
+import { IRootState, IPatchUserRequest } from "../utils/interfaces-and-types";
+import { ILogoutToken } from "../services/actions/auth-actions";
+
+export const ProfilePage: React.FC = () => {
   const location = useLocation();
   const [userPassword, setUserPassword] = React.useState("");
   const [userEmail, setUserEmail] = React.useState("");
   const [userName, setUserName] = React.useState("");
   const [buttonsAreHidden, setButtonsAreHidden] = React.useState(true);
-  const { userProfile } = useSelector((store) => store.profileReducer);
+  const { userProfile } = useSelector((store: IRootState) => store.profileReducer);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   React.useEffect(() => {
     if (userProfile) {
@@ -53,19 +56,19 @@ export const ProfilePage = () => {
     }
   }, [userPassword, userEmail, userName]);
 
-  const handleChange = (e) => {
-    switch (e.target.name) {
+  const handleChange = (e: React.ChangeEvent) => {
+    switch ((e.target as HTMLInputElement).name) {
       case "userPassword": {
-        setUserPassword(e.target.value);
+        setUserPassword((e.target as HTMLInputElement).value);
 
         break;
       }
       case "userEmail": {
-        setUserEmail(e.target.value);
+        setUserEmail((e.target as HTMLInputElement).value);
         break;
       }
       case "userName": {
-        setUserName(e.target.value);
+        setUserName((e.target as HTMLInputElement).value);
         break;
       }
       default: {
@@ -75,13 +78,13 @@ export const ProfilePage = () => {
   };
 
   const handleCancelClick = () => {
-    setUserEmail(userProfile.email);
-    setUserName(userProfile.name);
+    setUserEmail(userProfile!.email);
+    setUserName(userProfile!.name);
     setUserPassword("");
   };
 
   const handleSaveClick = () => {
-    const userAttrs = {
+    const userAttrs: IPatchUserRequest = {
       name: userName,
       email: userEmail,
       password: userPassword,
@@ -89,8 +92,8 @@ export const ProfilePage = () => {
     dispatch(patchUser(`${BASE_URL}${USER_INFO_ENDPOINT}`, userAttrs));
   };
 
-  const logoutAndDelUserInfo = (logoutToken) => {
-    return (dispatch) => {
+  const logoutAndDelUserInfo = (logoutToken: ILogoutToken ) => {
+    return (dispatch: any) => {
       dispatch(postLogout(`${BASE_URL}${LOGOUT_ENDPOINT}`, logoutToken)).then(
         () => {
           dispatch({ type: DEL_USER_INFO });
@@ -102,9 +105,9 @@ export const ProfilePage = () => {
     };
   };
 
-  const handleExitClick = (e) => {
+  const handleExitClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    const logoutToken = { token: localStorage.getItem("refreshToken") };
+    const logoutToken: ILogoutToken = { token: localStorage.getItem("refreshToken") };
     dispatch(logoutAndDelUserInfo(logoutToken));
   };
 
@@ -159,7 +162,7 @@ export const ProfilePage = () => {
                   value={userName}
                   onChange={handleChange}
                   isIcon={true}
-                  error={false}
+                  
                 />
               </div>
               <div className={`mt-6`}>
@@ -178,7 +181,7 @@ export const ProfilePage = () => {
                   value={userPassword}
                   onChange={handleChange}
                   icon={"EditIcon"}
-                  error={false}
+                 
                 />
               </div>
             </div>

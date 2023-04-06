@@ -1,15 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
-const modalRoot = document.getElementById("react-modals");
+const modalRoot= document.getElementById("react-modals") as HTMLElement;
 
-const Modal = ({ children, onClose }) => {
-  const checkEscape = (e) => {
+interface IModalProps {
+  onClose: ()=> any;
+  children: React.ReactNode;
+}
+
+const Modal: React.FC<IModalProps> = ({children, onClose }) => {
+  const checkEscape = (e: KeyboardEvent): void => {
     if (e.key === "Escape") {
       onClose();
     }
@@ -30,7 +34,7 @@ const Modal = ({ children, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className={`${styles.closeIcon} mr-10 mt-15`}>
-          <CloseIcon onClick={onClose} />{" "}
+          <CloseIcon onClick={onClose} type="primary" />{" "}
         </div>
         {children}
       </div>
@@ -38,12 +42,6 @@ const Modal = ({ children, onClose }) => {
     modalRoot
   );
 };
-
-Modal.propTypes = {
-  children: PropTypes.element.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
-
 
 export default Modal;
 

@@ -4,15 +4,16 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./ingredient-details.module.css";
 
 import { useSelector } from "react-redux";
-import { useParams,useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
-const IngredientDetails = () => {
+import {IRootState, IBackground} from "../../utils/interfaces-and-types";
+
+const IngredientDetails: React.FC = () => {
   const { id } = useParams();
-  const { modalVisible } = useSelector((store) => store.modalReducer);
+  const { modalVisible } = useSelector((store: IRootState) => store.modalReducer);
   const location = useLocation();
-  const background = location.state && location.state.background;
-
-  const ingredientFromSearch = useSelector((store) => {
+  const background: IBackground = location.state && location.state.background;
+  const ingredientFromSearch = useSelector((store: IRootState) => {
     return store.getAllIngredientsReducer.allIngredients.find(
       (item) => item._id === id
     );
@@ -27,7 +28,7 @@ const IngredientDetails = () => {
       ingredientFromSearch;
     return (
       <>
-        <div className={background ? null : `${styles.pageContainer}`}>
+        <div className={`${background ? null : styles.pageContainer}`}>
           <div
             className={`${!background ? null : styles.headerLeft} ${
               styles.header
@@ -95,6 +96,7 @@ const IngredientDetails = () => {
       </>
     );
   }
+  return null;
 };
 
 export default IngredientDetails;

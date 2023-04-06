@@ -15,17 +15,19 @@ import { BASE_URL, RESET_PSWD_ENDPOINT } from "../utils/urls";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export const ResetPasswordPage = () => {
+import { IRootState } from "../utils/interfaces-and-types";
+
+export const ResetPasswordPage: React.FC  = () => {
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmCode, setConfirmCode] = React.useState("");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const { loading, errorForReset } = useSelector(
-    (store) => store.passwordReducer
+    (store: IRootState) => store.passwordReducer
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const resetPasswordRequest = { password: newPassword, token: confirmCode };
     dispatch(
@@ -39,14 +41,14 @@ export const ResetPasswordPage = () => {
     }
   };
 
-  const handleChange = (e) => {
-    switch (e.target.name) {
+  const handleChange = (e: React.ChangeEvent) => {
+    switch ((e.target as HTMLInputElement).name) {
       case "newPassword": {
-        setNewPassword(e.target.value);
+        setNewPassword((e.target as HTMLInputElement).value);
         break;
       }
       case "confirmCode": {
-        setConfirmCode(e.target.value);
+        setConfirmCode((e.target as HTMLInputElement).value);
         break;
       }
       default: {

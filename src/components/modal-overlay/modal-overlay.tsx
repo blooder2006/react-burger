@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./modal-overlay.module.css";
 
-const ModalOverlay = () => {
+const ModalOverlay: React.FC  = () => {
   return (<div className={`${styles.modalOverlay}`}></div>);
 };
 

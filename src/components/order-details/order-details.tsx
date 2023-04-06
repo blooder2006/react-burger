@@ -6,8 +6,10 @@ import detailsLogo from "../../images/details-logo.svg";
 
 import { useSelector } from "react-redux";
 
-const OrderDetails = () => {
-  const { orderNumber } = useSelector((store) => store.orderReducer);
+import {IRootState} from "../../utils/interfaces-and-types";
+
+const OrderDetails: React.FC   = () => {
+  const { orderNumber } = useSelector((store: IRootState) => store.orderReducer);
 
   return (
     <div className={`${styles.orderDetailsMain} mt-30`}>

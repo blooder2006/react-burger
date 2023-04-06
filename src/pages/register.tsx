@@ -17,29 +17,32 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveTokens } from "../utils/auth";
 
-export const RegisterPage = () => {
+import { IRootState } from "../utils/interfaces-and-types";
+import { IRegisterUserRequest } from "../services/actions/auth-actions";
+
+export const RegisterPage: React.FC = () => {
   const [userName, setUserName] = React.useState("");
   const [userPassword, setUserPassword] = React.useState("");
   const [userEmail, setUserEmail] = React.useState("");
 
   const { accessToken, refreshToken } = useSelector(
-    (store) => store.registerReducer
+    (store: IRootState) => store.registerReducer
   );
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
-  const handleChange = (e) => {
-    switch (e.target.name) {
+  const handleChange = (e: React.ChangeEvent) => {
+    switch ((e.target as HTMLInputElement).name) {
       case "userName": {
-        setUserName(e.target.value);
+        setUserName((e.target as HTMLInputElement).value);
         break;
       }
       case "userPassword": {
-        setUserPassword(e.target.value);
+        setUserPassword((e.target as HTMLInputElement).value);
         break;
       }
       case "userEmail": {
-        setUserEmail(e.target.value);
+        setUserEmail((e.target as HTMLInputElement).value);
         break;
       }
       default: {
@@ -48,9 +51,9 @@ export const RegisterPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const registerUserRequest = {
+    const registerUserRequest: IRegisterUserRequest = {
       name: userName,
       password: userPassword,
       email: userEmail,

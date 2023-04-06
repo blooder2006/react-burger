@@ -1,11 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient.module.css";
-import { ingredientsPropTypes } from "../../utils/prop-types";
 
 import { useDispatch } from "react-redux";
 import IngredientDetails from "../ingredient-details/ingredient-details";
@@ -14,21 +12,28 @@ import { SHOW_MODAL_WITH_NAV_STEP } from "../../services/actions/modal-actions";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from 'react-router-dom';
 
-const Ingredient = ({ ingredient, counter }) => {
+import { IBurgerIngredientForList} from "../../utils/interfaces-and-types";
+
+interface IIngredientProps {
+  ingredient: IBurgerIngredientForList;
+  counter: number;
+}
+
+const Ingredient: React.FC<IIngredientProps>  = ({ ingredient, counter }) => {
   const { name, image, price } = ingredient;
   const ingredientId = ingredient['_id'];
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const handleClick = () =>
+  const handleClick = (): void =>{
     dispatch({
       type: SHOW_MODAL_WITH_NAV_STEP,
       header: "Детали ингредиента",
       modalContent: IngredientDetails,
       details: ingredient,
-    });
+    })};
 
-  const [{ opacity }, dragRef] = useDrag({
+  const [{ opacity }, dragRef] = useDrag<IBurgerIngredientForList, void, { opacity: number }>({
     type: "ingredient",
     item: { ...ingredient },
     collect: (monitor) => ({ opacity: monitor.isDragging() ? 0.5 : 1 }),
@@ -46,7 +51,7 @@ const Ingredient = ({ ingredient, counter }) => {
         <img className={`ml-4 mr-4 mb-1`} src={image} alt="ingredient" />
         <div className={`${styles.priceAndIcon} text_type_digits-default mb-4`}>
           <span>{price}</span>
-          <CurrencyIcon />
+          <CurrencyIcon type="primary"/>
         </div>
         <div className={`${styles.ingredientName} text text_type_main-default`}>
           {name}
@@ -54,11 +59,6 @@ const Ingredient = ({ ingredient, counter }) => {
       </div>
     </Link>
   );
-};
-
-Ingredient.propTypes = {
-  ingredient: ingredientsPropTypes,
-  counter: PropTypes.number.isRequired,
 };
 
 export default Ingredient;

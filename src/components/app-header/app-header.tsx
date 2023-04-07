@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./app-header.module.css";
-
 import {
   Logo,
   BurgerIcon,
@@ -12,9 +11,8 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import { useLocation, Link } from "react-router-dom";
 
-const AppHeader = () => {
+const AppHeader: React.FC   = () => {
   const location = useLocation();
-
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>

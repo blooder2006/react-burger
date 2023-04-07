@@ -28,22 +28,24 @@ import ConstructorElementWrapper from "../constructor-element-wrapper/constructo
 import Modal from "../modal/modal";
 import { useNavigate } from "react-router-dom";
 
-const BurgerConstructor = () => {
+import { IBurgerRequest, IRootState, IBurgerIngredientForList, TDragCallback } from "../../utils/interfaces-and-types";
+
+const BurgerConstructor: React.FC  = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { selectedIngredients, selectedBun, totalPrice } = useSelector(
-    (store) => store.constructorReducer
+    (store: IRootState) => store.constructorReducer
   );
 
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
 
   const { bunList, sauceList, mainList } = useSelector(
-    (store) => store.burgerIngredientsReducer
+    (store: IRootState) => store.burgerIngredientsReducer
   );
 
-  const orderAndShowModal = (burgerRequest) => {
-    return (dispatch) => {
+  const orderAndShowModal = (burgerRequest: IBurgerRequest): any => {
+    return (dispatch: any) => {
       dispatch(getOrder(`${BASE_URL}${ORDER_ENDPOINT}`, burgerRequest)).then(
         () => {
           setModalVisible(true);
@@ -52,7 +54,7 @@ const BurgerConstructor = () => {
     };
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (): void => {
     const burgerRequest = {
       ingredients: [
         ...selectedIngredients.map((elem) => {
@@ -70,7 +72,7 @@ const BurgerConstructor = () => {
     }
   };
 
-  const [{ isHover }, dropTargerRef] = useDrop({
+  const [{ isHover }, dropTargerRef] = useDrop<IBurgerIngredientForList, void, { isHover: boolean }>({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -125,7 +127,7 @@ const BurgerConstructor = () => {
     },
   });
 
-  const moveCard = React.useCallback(
+  const moveCard = React.useCallback<TDragCallback>(
     (dragIndex, hoverIndex) => {
       const dragCard = selectedIngredients[dragIndex];
       const newCards = [...selectedIngredients];
@@ -179,7 +181,7 @@ const BurgerConstructor = () => {
 
         <div className={`${styles.ingredientList} mt-4`}>
           {selectedIngredients.length > 0 ? (
-            selectedIngredients.map((elem, index) => {
+            selectedIngredients.map((elem, index: number) => {
               return (
                 <ConstructorElementWrapper
                   key={elem.dragId}
@@ -214,7 +216,7 @@ const BurgerConstructor = () => {
         <div className={`text_type_digits-medium`}>
           <span className={`mr-4`}>{totalPrice ? totalPrice : 0}</span>
           <div className={`${styles.totalPriceIcon}`}>
-            <CurrencyIcon />
+            <CurrencyIcon type="primary"/>
           </div>
         </div>
         <Button
@@ -241,5 +243,7 @@ const BurgerConstructor = () => {
     </div>
   );
 };
+
+
 
 export default BurgerConstructor;

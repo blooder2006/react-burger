@@ -1,6 +1,8 @@
 import { fetchWithRefresh } from "../../utils/auth";
 import { getCookie } from "../../utils/auth";
 import { BASE_URL, USER_INFO_ENDPOINT } from "../../utils/urls";
+import { Dispatch } from 'redux';
+import { IPatchUserRequest, IGetUserResponse } from "../../utils/interfaces-and-types";
 
 export const SET_USER_INFO = "SET_USER_INFO";
 export const SET_USER_INFO_FAIL = "SET_USER_INFO_FAIL";
@@ -11,8 +13,8 @@ export const PATCH_USER_INFO_SUCCESS = "PATCH_USER_INFO_SUCCESS";
 export const PATCH_USER_INFO_FAIL = "PATCH_USER_INFO_FAIL";
 
 //запрос на получение данных пользователя
-export function getUser(url) {
-  return function (dispatch) {
+export function getUser(url: string) {
+  return function (dispatch: Dispatch) {
     const getUserInfoOptions = {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -20,14 +22,14 @@ export function getUser(url) {
       },
     };
     return fetchWithRefresh(url, getUserInfoOptions)
-      .then((dataJson) => {
+      .then((dataJson: IGetUserResponse) => {
         dispatch({
           type: SET_USER_INFO,
           payload: dataJson.user,
         });
         return dataJson.user;
       })
-      .catch((e) => {
+      .catch((e: Error) => {
         dispatch({
           type: SET_USER_INFO_FAIL,
           payload: e.message,
@@ -37,8 +39,8 @@ export function getUser(url) {
 }
 
 //запрос на изменение данных пользователя
-export function patchUser(url, userAttrs) {
-  return function (dispatch) {
+export function patchUser(url: string, userAttrs: IPatchUserRequest) {
+  return function (dispatch: Dispatch) {
     const patchUserInfoOptions = {
       method: "PATCH",
       headers: {
@@ -54,7 +56,7 @@ export function patchUser(url, userAttrs) {
           payload: dataJson.user,
         });
       })
-      .catch((e) => {
+      .catch((e: Error) => {
         dispatch({
           type: SET_USER_INFO_FAIL,
           payload: e.message,
@@ -64,7 +66,7 @@ export function patchUser(url, userAttrs) {
 }
 
 //проверка авторизации
-export const checkUserAuth = () => (dispatch) => {
+export const checkUserAuth = () => (dispatch: any) => {
   if (getCookie("accessToken")) {
     dispatch(getUser(`${BASE_URL}${USER_INFO_ENDPOINT}`)).finally(() => {
       dispatch({

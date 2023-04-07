@@ -1,15 +1,15 @@
 import { BASE_URL, REFRESH_TOKEN_ENDPOINT } from "./urls";
 import { checkResponse } from "./check-response";
 
-export function getCookie(name) {
+export function getCookie(name: string) {
     const matches = document.cookie.match(
       new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
   
-export function setCookie(name, value, props) {
-props = props || {};
+export function setCookie(name: string, value: string | null, props?: { [propName: string]: any}) {
+props = props! || {};
 let exp = props.expires;
 if (typeof exp == 'number' && exp) {
     const d = new Date();
@@ -19,7 +19,7 @@ if (typeof exp == 'number' && exp) {
 if (exp && exp.toUTCString) {
     props.expires = exp.toUTCString();
 }
-value = encodeURIComponent(value);
+value = encodeURIComponent(value!);
 let updatedCookie = name + '=' + value;
 for (const propName in props) {
     updatedCookie += '; ' + propName;
@@ -31,16 +31,16 @@ for (const propName in props) {
 document.cookie = updatedCookie;
 }
 
-export function deleteCookie(name) {
+export function deleteCookie(name: string) {
 setCookie(name, null, { expires: -1 });
 }
 
-export const saveTokens = (refreshToken, accessToken) => {
+export const saveTokens = (refreshToken: string, accessToken: string) => {
   setCookie("accessToken", accessToken);
   localStorage.setItem("refreshToken", refreshToken);
 };
 
-export const refreshTokenRequest = (url, tokenEndpoint) => {
+export const refreshTokenRequest = (url: string, tokenEndpoint: string) => {
   return fetch(`${url}${tokenEndpoint}`, {
     method: "POST",
     headers: {
@@ -52,11 +52,11 @@ export const refreshTokenRequest = (url, tokenEndpoint) => {
   }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: {method?: string, headers: HeadersInit & {authorization: string}, body?: string}) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === "jwt expired") {
       const { refreshToken, accessToken } = await refreshTokenRequest(BASE_URL, REFRESH_TOKEN_ENDPOINT);
       saveTokens(refreshToken, accessToken.split('Bearer ')[1]);

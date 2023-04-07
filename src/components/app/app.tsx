@@ -24,11 +24,13 @@ import { ProtectedRoute } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found-404";
 import { useNavigate } from "react-router-dom";
 
-const App = () => {
-  const { isAuthChecked } = useSelector((store) => store.profileReducer);
-  const dispatch = useDispatch();
+import { IRootState, IBackground } from "../../utils/interfaces-and-types";
+
+const App : React.FC  = () => {
+  const { isAuthChecked } = useSelector((store: IRootState) => store.profileReducer);
+  const dispatch = useDispatch<any>();
   const { allIngredients } = useSelector(
-    (store) => store.getAllIngredientsReducer
+    (store: IRootState) => store.getAllIngredientsReducer
   );
 
   React.useEffect(() => {
@@ -66,7 +68,7 @@ const App = () => {
     };
 
     const location = useLocation();
-    const background = location.state && location.state.background;
+    const background: IBackground = location.state && location.state.background;
 
     return (
       <div>
@@ -98,7 +100,7 @@ const App = () => {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute element={<ProfilePage />}></ProtectedRoute>
+                <ProtectedRoute onlyUnAuth={false} element={<ProfilePage />}></ProtectedRoute>
               }
             >
               <Route path="orders" element={<div>Loading</div>}>
@@ -128,7 +130,6 @@ const App = () => {
               element={
                 <ProtectedRoute
                   onlyUnAuth
-                  onlyEmailProvided
                   element={<ResetPasswordPage />}
                 ></ProtectedRoute>
               }

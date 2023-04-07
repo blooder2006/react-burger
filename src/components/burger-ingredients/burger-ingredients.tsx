@@ -7,21 +7,23 @@ import Ingredient from "../ingredient/ingredient";
 
 import { useSelector } from "react-redux";
 
-const BurgerIngredients = () => {
+import {IRootState} from "../../utils/interfaces-and-types";
+
+const BurgerIngredients: React.FC = () => {
   const { bunList, sauceList, mainList } = useSelector(
-    (store) => store.burgerIngredientsReducer
+    (store: IRootState) => store.burgerIngredientsReducer
   );
 
-  const [currentTab, setCurrentTab] = React.useState("bun");
+  const [currentTab, setCurrentTab] = React.useState<string>("bun");
 
-  const bunRef = React.useRef();
-  const sauceRef = React.useRef();
-  const mainRef = React.useRef();
+  const bunRef = React.useRef<HTMLParagraphElement>(null);
+  const sauceRef = React.useRef<HTMLParagraphElement>(null);
+  const mainRef = React.useRef<HTMLParagraphElement>(null);
 
-  const callBackFunction = (entries) => {
+  const callBackFunction = (entries: Array<IntersectionObserverEntry>) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        setCurrentTab(entry.target.getAttribute("id"));
+        setCurrentTab(entry.target.getAttribute("id")!);
       }
     });
   };
@@ -51,13 +53,13 @@ const BurgerIngredients = () => {
         Соберите бургер
       </h1>
       <div className={`${styles.tabs}`}>
-        <Tab value="bun" active={currentTab === "bun"}>
+        <Tab value="bun" active={currentTab === "bun"} onClick={()=>{}}>
           Булки
         </Tab>
-        <Tab value="sauce" active={currentTab === "sauce"}>
+        <Tab value="sauce" active={currentTab === "sauce"} onClick={()=>{}}>
           Соусы
         </Tab>
-        <Tab value="main" active={currentTab === "main"}>
+        <Tab value="main" active={currentTab === "main"} onClick={()=>{}}>
           Начинки
         </Tab>
       </div>

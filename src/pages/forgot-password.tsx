@@ -14,16 +14,18 @@ import { BASE_URL, FORGOT_PSWD_ENDPOINT } from "../utils/urls";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export const ForgotPasswordPage = () => {
+import { IRootState } from "../utils/interfaces-and-types";
+
+export const ForgotPasswordPage: React.FC = () => {
   const [currentEmail, setCurrentEmail] = React.useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const { loading, errorForForgot } = useSelector(
-    (store) => store.passwordReducer
+    (store: IRootState) => store.passwordReducer
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (currentEmail) {
       dispatch(
@@ -39,8 +41,8 @@ export const ForgotPasswordPage = () => {
     }
   };
 
-  const handleEmailChange = (e) => {
-    setCurrentEmail(e.target.value);
+  const handleEmailChange = (e: React.ChangeEvent ) => {
+    setCurrentEmail((e.target as HTMLInputElement).value);
   };
 
   return (

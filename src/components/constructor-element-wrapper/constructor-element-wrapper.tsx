@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   ConstructorElement,
   DragIcon,
@@ -10,6 +9,7 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./constructor-element-wrapper.module.css";
 
 import { useDrag, useDrop } from "react-dnd";
+import type { Identifier, XYCoord } from 'dnd-core'
 import { useSelector, useDispatch } from "react-redux";
 import {
   DEL_COMPONENT,
@@ -17,14 +17,28 @@ import {
   CALC_MAIN_COUNTER,
 } from "../../services/actions/ingredients-actions";
 
-export default function ConstructorElementWrapper({ item, index, moveCard }) {
+import { IRootState, IBurgerIngredientForConstructor, TDragCallback } from "../../utils/interfaces-and-types";
+
+interface IDragAndDropItem {
+  id: string;
+  index: number;
+}
+
+interface IConstructorElementWrapperProps {
+  item: IBurgerIngredientForConstructor;
+  index: number;
+  moveCard: TDragCallback;
+}
+
+const ConstructorElementWrapper: React.FC<IConstructorElementWrapperProps> = ({ item, index, moveCard }) => {
   const dispatch = useDispatch();
   const { sauceList, mainList } = useSelector(
-    (store) => store.burgerIngredientsReducer
+    (store: IRootState) => store.burgerIngredientsReducer
   );
 
-  const ref = React.useRef(null);
-  const [{ handlerId }, drop] = useDrop({
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  const [{ handlerId }, drop] = useDrop<IDragAndDropItem, void, { handlerId: Identifier | null }>({
     accept: "component",
     collect(monitor) {
       return {
@@ -36,7 +50,6 @@ export default function ConstructorElementWrapper({ item, index, moveCard }) {
       if (!ref.current) {
         return;
       }
-
       const dragIndex = item.index;
       const hoverIndex = index;
 
@@ -48,7 +61,7 @@ export default function ConstructorElementWrapper({ item, index, moveCard }) {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -62,9 +75,9 @@ export default function ConstructorElementWrapper({ item, index, moveCard }) {
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag<() => IDragAndDropItem | null, void, { isDragging: boolean }>({
     type: "component",
-    item: () => ({ id: item.id, index }),
+    item: () => ({ id: item._id, index }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -74,7 +87,7 @@ export default function ConstructorElementWrapper({ item, index, moveCard }) {
 
   if (item.type !== "bun") drag(drop(ref));
 
-  const preventDefault = (e) => e.preventDefault();
+  const preventDefault = (e: React.MouseEvent) => e.preventDefault();
 
   const delElement = () => {
     dispatch({
@@ -115,7 +128,7 @@ export default function ConstructorElementWrapper({ item, index, moveCard }) {
       className={`${styles.innerIngredient} mb-4 mr-2`}
       data-handler-id={handlerId}
     >
-      <DragIcon />
+      <DragIcon type="primary"/>
       <ConstructorElement
         isLocked={false}
         text={item.name}
@@ -127,8 +140,4 @@ export default function ConstructorElementWrapper({ item, index, moveCard }) {
   );
 }
 
-ConstructorElementWrapper.propTypes = {
-  item: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  moveCard: PropTypes.func.isRequired,
-};
+export default ConstructorElementWrapper;

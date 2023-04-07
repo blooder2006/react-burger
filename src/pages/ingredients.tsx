@@ -8,11 +8,13 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { checkUserAuth } from "../services/actions/user-actions";
 
-export const IngredientDetailsPage = () => {
-  const dispatch = useDispatch();
+import { IRootState } from "../utils/interfaces-and-types";
+
+export const IngredientDetailsPage: React.FC = () => {
+  const dispatch = useDispatch<any>();
   const { id } = useParams();
 
-  const item = useSelector((store) => {
+  const item = useSelector((store: IRootState) => {
     return store.getAllIngredientsReducer.allIngredients.find(
       (item) => item._id === id
     );

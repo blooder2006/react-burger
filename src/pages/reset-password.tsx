@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 import { IRootState } from "../utils/interfaces-and-types";
 
-export const ResetPasswordPage: React.FC  = () => {
+export const ResetPasswordPage: React.FC = () => {
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmCode, setConfirmCode] = React.useState("");
 
@@ -59,7 +59,7 @@ export const ResetPasswordPage: React.FC  = () => {
 
   return (
     <div className={`${styles.inputPage}`}>
-      <p className="text text_type_main-medium">Восстановление пароля</p>
+      <p className={`text text_type_main-medium`}>Восстановление пароля</p>
       <form className={`${styles.form}`} onSubmit={handleSubmit}>
         <div className={`mt-6`}>
           <PasswordInput
@@ -78,13 +78,11 @@ export const ResetPasswordPage: React.FC  = () => {
           />
         </div>
         <div className={`mt-6 mb-20`}>
-          <Button htmlType="submit">
-            Сохранить
-          </Button>
+          <Button htmlType="submit">Сохранить</Button>
         </div>
       </form>
       <div className={`${styles.linkBox}`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Вспомнили пароль?
         </p>
         <div>

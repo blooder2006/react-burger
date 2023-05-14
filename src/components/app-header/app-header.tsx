@@ -11,7 +11,7 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import { useLocation, Link } from "react-router-dom";
 
-const AppHeader: React.FC   = () => {
+const AppHeader: React.FC = () => {
   const location = useLocation();
   return (
     <header className={styles.header}>
@@ -41,7 +41,7 @@ const AppHeader: React.FC   = () => {
             </Button>{" "}
           </Link>
           <Link
-            to={{ pathname: `/` }}
+            to={{ pathname: `/feed` }}
             className={`${styles.flexLink} mt-4 mb-4`}
           >
             <Button
@@ -51,7 +51,11 @@ const AppHeader: React.FC   = () => {
             >
               <ListIcon type="secondary" />
               <span
-                className={`text text_type_main-default text_color_inactive`}
+                className={`text text_type_main-default ${
+                  location.pathname === "/feed"
+                    ? "text_color_primary"
+                    : "text_color_inactive"
+                }`}
               >
                 Лента заказов
               </span>

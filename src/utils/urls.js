@@ -1,4 +1,4 @@
-export const BASE_URL = "https://norma.nomoreparties.space/api"; 
+export const BASE_URL = "https://norma.nomoreparties.space/api";
 export const DATA_ENDPOINT = "/ingredients";
 export const ORDER_ENDPOINT = "/orders";
 export const FORGOT_PSWD_ENDPOINT = "/password-reset";
@@ -8,3 +8,5 @@ export const LOGIN_ENDPOINT = "/auth/login";
 export const REFRESH_TOKEN_ENDPOINT = "/auth/token";
 export const LOGOUT_ENDPOINT = "/auth/logout";
 export const USER_INFO_ENDPOINT = "/auth/user";
+export const FEED_ENDPOINT = "wss://norma.nomoreparties.space/orders/all";
+export const USER_ORDERS_ENDPOINT = "wss://norma.nomoreparties.space/orders";

@@ -13,11 +13,13 @@ interface LocationState {
   };
 }
 
-
-
-
-export const ProtectedRoute: React.FC<IProtectedRouteProps>  = ({ onlyUnAuth = false, element }) => {
-  const { userProfile } = useSelector((store: IRootState) => store.profileReducer);
+export const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
+  onlyUnAuth = false,
+  element,
+}) => {
+  const { userProfile } = useSelector(
+    (store: IRootState) => store.profileReducer
+  );
   const location = useLocation();
 
   if (onlyUnAuth && userProfile) {
@@ -26,16 +28,17 @@ export const ProtectedRoute: React.FC<IProtectedRouteProps>  = ({ onlyUnAuth = f
   }
 
   if (!onlyUnAuth && !userProfile) {
-    return <Navigate to={{ pathname: "/login"}} state={{ from: location }}/>;
+    return <Navigate to={{ pathname: "/login" }} state={{ from: location }} />;
   }
 
   if (location.pathname === "/reset-password" && !location.state?.fromForgot) {
     return (
       <Navigate
-        to={{ pathname: "/forgot-password"}} state= {{ from: location }}/>
+        to={{ pathname: "/forgot-password" }}
+        state={{ from: location }}
+      />
     );
   }
-  
-  return <>{element}</>;
 
+  return <>{element}</>;
 };

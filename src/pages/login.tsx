@@ -20,7 +20,7 @@ import { saveTokens } from "../utils/auth";
 import { IRootState } from "../utils/interfaces-and-types";
 import { ILoginRequest } from "../services/actions/auth-actions";
 
-export const LoginPage: React.FC  = () => {
+export const LoginPage: React.FC = () => {
   const [userPassword, setUserPassword] = React.useState("");
   const [userEmail, setUserEmail] = React.useState("");
 
@@ -70,7 +70,7 @@ export const LoginPage: React.FC  = () => {
 
   return (
     <div className={`${styles.inputPage}`}>
-      <p className="text text_type_main-medium">Вход</p>
+      <p className={`text text_type_main-medium`}>Вход</p>
       <form className={`${styles.form}`} onSubmit={handleSubmit}>
         <div className={`mt-6`}>
           <EmailInput
@@ -91,7 +91,7 @@ export const LoginPage: React.FC  = () => {
         </div>
       </form>
       <div className={`${styles.linkBox} mb-4`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Вы — новый пользователь?
         </p>
         <div>
@@ -104,7 +104,7 @@ export const LoginPage: React.FC  = () => {
         </div>
       </div>
       <div className={`${styles.linkBox}`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Забыли пароль?
         </p>
         <div>

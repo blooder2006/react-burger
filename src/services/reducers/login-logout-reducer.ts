@@ -7,7 +7,10 @@ import {
   POST_LOGOUT_FAIL,
 } from "../actions/auth-actions";
 
-const initialState = {
+import type { TAuthActions } from "../actions/auth-actions";
+import { ILoginLogoutState } from "../../utils/interfaces-and-types";
+
+const initialState: ILoginLogoutState = {
   loading: false,
   accessToken: null,
   refreshToken: null,
@@ -16,7 +19,7 @@ const initialState = {
   userLogedIn: null,
 };
 
-export const loginLogoutReducer = (state = initialState, action) => {
+export const loginLogoutReducer = (state = initialState, action: TAuthActions) => {
   switch (action.type) {
     case POST_LOGIN_REQUEST: {
       return {

@@ -5,13 +5,19 @@ import {
   CALC_MAIN_COUNTER,
 } from "../actions/ingredients-actions";
 
-const initialState = {
+import type { TIngredientsActions } from "../actions/ingredients-actions";
+import { IIngredientsState } from "../../utils/interfaces-and-types";
+
+const initialState: IIngredientsState = {
   bunList: [],
   sauceList: [],
   mainList: [],
 };
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (
+  state = initialState,
+  action: TIngredientsActions
+) => {
   switch (action.type) {
     case FILL_INGREDIENTS_LIST: {
       return {

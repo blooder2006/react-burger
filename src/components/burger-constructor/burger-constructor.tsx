@@ -28,9 +28,14 @@ import ConstructorElementWrapper from "../constructor-element-wrapper/constructo
 import Modal from "../modal/modal";
 import { useNavigate } from "react-router-dom";
 
-import { IBurgerRequest, IRootState, IBurgerIngredientForList, TDragCallback } from "../../utils/interfaces-and-types";
+import {
+  IBurgerRequest,
+  IRootState,
+  IBurgerIngredientForList,
+  TDragCallback,
+} from "../../utils/interfaces-and-types";
 
-const BurgerConstructor: React.FC  = () => {
+const BurgerConstructor: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -72,7 +77,11 @@ const BurgerConstructor: React.FC  = () => {
     }
   };
 
-  const [{ isHover }, dropTargerRef] = useDrop<IBurgerIngredientForList, void, { isHover: boolean }>({
+  const [{ isHover }, dropTargerRef] = useDrop<
+    IBurgerIngredientForList,
+    void,
+    { isHover: boolean }
+  >({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -216,7 +225,7 @@ const BurgerConstructor: React.FC  = () => {
         <div className={`text_type_digits-medium`}>
           <span className={`mr-4`}>{totalPrice ? totalPrice : 0}</span>
           <div className={`${styles.totalPriceIcon}`}>
-            <CurrencyIcon type="primary"/>
+            <CurrencyIcon type="primary" />
           </div>
         </div>
         <Button
@@ -243,7 +252,5 @@ const BurgerConstructor: React.FC  = () => {
     </div>
   );
 };
-
-
 
 export default BurgerConstructor;

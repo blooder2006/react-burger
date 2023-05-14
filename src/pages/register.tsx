@@ -76,7 +76,7 @@ export const RegisterPage: React.FC = () => {
 
   return (
     <div className={`${styles.inputPage}`}>
-      <p className="text text_type_main-medium">Регистрация</p>
+      <p className={`text text_type_main-medium`}>Регистрация</p>
       <form className={`${styles.form}`} onSubmit={handleSubmit}>
         <div className={`mt-6`}>
           <Input
@@ -101,13 +101,11 @@ export const RegisterPage: React.FC = () => {
           />
         </div>
         <div className={`mt-6 mb-20`}>
-          <Button htmlType="submit" >
-            Зарегистрироваться
-          </Button>
+          <Button htmlType="submit">Зарегистрироваться</Button>
         </div>
       </form>
       <div className={`${styles.linkBox}`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Уже зарегистрированы?
         </p>
         <div>

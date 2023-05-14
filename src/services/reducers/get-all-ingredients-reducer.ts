@@ -4,13 +4,16 @@ import {
   GET_INGREDIENTS_FAIL,
 } from "../actions/ingredients-actions";
 
-const initialState = {
+import type { TIngredientsActions } from "../actions/ingredients-actions";
+import { IGetAllIngredientsState } from "../../utils/interfaces-and-types";
+
+const initialState: IGetAllIngredientsState = {
   allIngredients: [],
   loading: false,
   error: null,
 };
 
-export const getAllIngredientsReducer = (state = initialState, action) => {
+export const getAllIngredientsReducer = (state = initialState, action: TIngredientsActions) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

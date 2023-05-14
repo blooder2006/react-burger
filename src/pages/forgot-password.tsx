@@ -41,13 +41,13 @@ export const ForgotPasswordPage: React.FC = () => {
     }
   };
 
-  const handleEmailChange = (e: React.ChangeEvent ) => {
+  const handleEmailChange = (e: React.ChangeEvent) => {
     setCurrentEmail((e.target as HTMLInputElement).value);
   };
 
   return (
     <div className={`${styles.inputPage}`}>
-      <p className="text text_type_main-medium">Восстановление пароля</p>
+      <p className={`text text_type_main-medium`}>Восстановление пароля</p>
       <form className={`${styles.form}`} onSubmit={handleSubmit}>
         <div className={`mt-6`}>
           <EmailInput
@@ -57,13 +57,11 @@ export const ForgotPasswordPage: React.FC = () => {
           />
         </div>
         <div className={`mt-6 mb-20`}>
-          <Button htmlType="submit">
-            Восстановить
-          </Button>
+          <Button htmlType="submit">Восстановить</Button>
         </div>
-        </form>
+      </form>
       <div className={`${styles.linkBox}`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Вспомнили пароль?
         </p>
         <div>

@@ -1,0 +1,12 @@
+.ingredientList {
+  overflow-y: scroll;
+  height: calc(100vh - 188px);
+  min-width: 584px;
+}
+
+.ingredientListProfilePage {
+  height: calc(100vh - 128px);
+  width: 852px;
+  position: relative;
+  left: 320px;
+}

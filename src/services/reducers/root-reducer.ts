@@ -8,6 +8,8 @@ import { passwordReducer } from "./password-reducer";
 import { registerReducer } from "./register-reducer";
 import { loginLogoutReducer } from "./login-logout-reducer";
 import { profileReducer } from "./profile-reducer";
+import { feedReducer } from "./feed-reducer";
+import { wsReducer } from "./ws-reducer";
 
 export const rootReducer = combineReducers({
   getAllIngredientsReducer,
@@ -18,5 +20,7 @@ export const rootReducer = combineReducers({
   passwordReducer,
   registerReducer,
   loginLogoutReducer,
-  profileReducer
+  profileReducer,
+  feedReducer,
+  wsReducer
 });

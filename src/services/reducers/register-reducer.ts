@@ -4,14 +4,17 @@ import {
   POST_REGISTER_USER_FAIL,
 } from "../actions/auth-actions";
 
-const initialState = {
+import type { TAuthActions } from "../actions/auth-actions";
+import { IRegisterState } from "../../utils/interfaces-and-types";
+
+const initialState: IRegisterState = {
   loading: false,
   accessToken: null,
   refreshToken: null,
   error: null,
 };
 
-export const registerReducer = (state = initialState, action) => {
+export const registerReducer = (state = initialState, action: TAuthActions) => {
   switch (action.type) {
     case POST_REGISTER_USER_REQUEST: {
       return {

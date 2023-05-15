@@ -39,12 +39,12 @@ export const getOrder: AppThunk = (
   url: string,
   burgerRequest: IBurgerRequest
 ) => {
-  return function (dispatch: AppDispatch) {
+  return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
 
-    return fetchWithRefresh(url, {
+    return await fetchWithRefresh(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",

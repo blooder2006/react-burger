@@ -7,14 +7,13 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { useSelector } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
-import { IBackground, IRootState } from "../../utils/interfaces-and-types";
+import { IBackground } from "../../utils/interfaces-and-types";
 import { burgerStatuses } from "../../utils/burger-status";
 import IngredientForBurgerOrder from "../ingredient-for-order/ingredient-for-order";
 import { FEED_ENDPOINT, USER_ORDERS_ENDPOINT } from "../../utils/urls";
 import { getCookie } from "../../utils/auth";
-import { useDispatch } from "../../utils/hooks";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
@@ -51,7 +50,7 @@ const BurgerDetails: React.FC = () => {
   }, [location]);
 
   let orders;
-  const message = useSelector((store: IRootState) => store.wsReducer.message);
+  const message = useSelector((store) => store.wsReducer.message);
 
   if (message) {
     orders = message.orders;
@@ -60,7 +59,7 @@ const BurgerDetails: React.FC = () => {
   const burgerFromSearch = orders?.find((item) => item._id === id);
 
   const { allIngredients } = useSelector(
-    (store: IRootState) => store.getAllIngredientsReducer
+    (store) => store.getAllIngredientsReducer
   );
 
   function getOccurrence(array: Array<string>, value: string) {
@@ -93,7 +92,7 @@ const BurgerDetails: React.FC = () => {
   });
 
   const visibleIngredients = allIngredientIcons?.map(
-    (el: any, index: number) => {
+    (el, index: number) => {
       if (el != undefined) {
         return (
           <IngredientForBurgerOrder

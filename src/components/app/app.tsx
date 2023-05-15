@@ -13,11 +13,9 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
-
 import BurgerDetails from "../burger-details/burger-details";
 import OrdersList from "../orders-list/orders-list";
 import { ProfileMenu } from "../profile-menu/profile-menu";
-import { useSelector, useDispatch } from "react-redux";
 import { getAllIngredients } from "../../services/actions/ingredients-actions";
 import { checkUserAuth } from "../../services/actions/user-actions";
 import { BASE_URL, DATA_ENDPOINT } from "../../utils/urls";
@@ -28,16 +26,18 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { ProtectedRoute } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found-404";
 import { useNavigate } from "react-router-dom";
-
-import { IRootState, IBackground } from "../../utils/interfaces-and-types";
+import { useDispatch, useSelector } from "../../utils/hooks";
+import { IBackground } from "../../utils/interfaces-and-types";
 
 const App: React.FC = () => {
+  
   const { isAuthChecked } = useSelector(
-    (store: IRootState) => store.profileReducer
+    (store) => store.profileReducer
   );
-  const dispatch = useDispatch<any>();
+  
+  const dispatch = useDispatch();
   const { allIngredients } = useSelector(
-    (store: IRootState) => store.getAllIngredientsReducer
+    (store) => store.getAllIngredientsReducer
   );
 
   React.useEffect(() => {

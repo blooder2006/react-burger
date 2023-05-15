@@ -62,9 +62,16 @@ const AppHeader: React.FC = () => {
             </Button>
           </Link>
         </div>
+
         <div className={`${styles.logo}`}>
+        <Link
+            to={{ pathname: `/` }}
+            className={`${styles.flexLink} pt-2`}
+          >
           <Logo />
+          </Link>
         </div>
+        
         <div className={`${styles.flexRight}`}>
           <Link
             to={{ pathname: `/profile` }}

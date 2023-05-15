@@ -1,1 +1,0 @@
-export const burgerStatuses = {done: "Выполнен", pending: "Готовится", created: "Создан"}

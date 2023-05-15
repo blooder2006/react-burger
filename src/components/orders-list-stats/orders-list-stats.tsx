@@ -2,13 +2,12 @@ import React from "react";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./orders-list-stats.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { useLocation } from "react-router-dom";
-import { IRootState } from "../../utils/interfaces-and-types";
 
 const OrdersListStats: React.FC = () => {
   const location = useLocation();
-  const message = useSelector((store: IRootState) => store.wsReducer.message);
+  const message = useSelector((store) => store.wsReducer.message);
 
   if (message) {
     const { orders, total, totalToday } = message;

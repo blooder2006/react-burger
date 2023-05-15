@@ -1,6 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { IRootState } from "../utils/interfaces-and-types";
+import { useSelector } from "../utils/hooks";
 
 interface IProtectedRouteProps {
   onlyUnAuth: boolean;
@@ -18,7 +17,7 @@ export const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
   element,
 }) => {
   const { userProfile } = useSelector(
-    (store: IRootState) => store.profileReducer
+    (store) => store.profileReducer
   );
   const location = useLocation();
 

@@ -6,12 +6,12 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-for-orders-list.module.css";
-import { useSelector } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
-import { IBackground, IRootState } from "../../utils/interfaces-and-types";
+import { IBackground } from "../../utils/interfaces-and-types";
 import { burgerStatuses } from "../../utils/burger-status";
 import IngredientImage from "../ingredient-image/ingredient-image";
 import { IBurgerForOrderListProps } from "../../utils/interfaces-and-types";
+import { useSelector } from "../../utils/hooks";
 
 const BurgerForOrderList: React.FC<IBurgerForOrderListProps> = ({
   orderId,
@@ -25,7 +25,7 @@ const BurgerForOrderList: React.FC<IBurgerForOrderListProps> = ({
   const background: IBackground = location.state && location.state.background;
 
   const { allIngredients } = useSelector(
-    (store: IRootState) => store.getAllIngredientsReducer
+    (store) => store.getAllIngredientsReducer
   );
 
   function getOccurrence(array: Array<string>, value: string) {
@@ -61,7 +61,7 @@ const BurgerForOrderList: React.FC<IBurgerForOrderListProps> = ({
   const hiddenIcons = allIngredientIcons.length - 6;
   const visibleIngredientIcons = allIngredientIcons
     .slice(0, 6)
-    .map((el: any, index: number) => {
+    .map((el, index: number) => {
       if (el != undefined) {
         return (
           <IngredientImage

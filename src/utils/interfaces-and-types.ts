@@ -1,5 +1,5 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { Action, ActionCreator, Dispatch } from "redux";
+import { Action, ActionCreator } from "redux";
 import { TAuthActions } from "../services/actions/auth-actions";
 import { TIngredientsActions } from "../services/actions/ingredients-actions";
 import { TModalActions } from "../services/actions/modal-actions";
@@ -23,11 +23,20 @@ export type TApplicationActions =
   | TFeedActions
   | TWSActions;
 
-export type AppThunk<TReturn = void> = ActionCreator<
+/*export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>;*/
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, RootState, unknown, TApplicationActions>
 >;
 
-export type AppDispatch = typeof store.dispatch;
+//export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = ThunkDispatch<
+  RootState,
+  unknown,
+  TApplicationActions
+>;
 
 export interface IBurgerRequest {
   ingredients: Array<string>;

@@ -14,10 +14,7 @@ const initialState: IIngredientsState = {
   mainList: [],
 };
 
-export const burgerIngredientsReducer = (
-  state = initialState,
-  action: TIngredientsActions
-) => {
+export const burgerIngredientsReducer = ( state = initialState, action: TIngredientsActions) => {
   switch (action.type) {
     case FILL_INGREDIENTS_LIST: {
       return {

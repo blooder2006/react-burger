@@ -2,11 +2,9 @@ import React from "react";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./orders-list.module.css";
-import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { IRootState } from "../../utils/interfaces-and-types";
 import BurgerForOrderList from "../burger-for-orders-list/burger-for-orders-list";
-import { useDispatch } from "../../utils/hooks";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   FEED_ENDPOINT,
   USER_ORDERS_ENDPOINT,
@@ -50,7 +48,7 @@ const OrdersList: React.FC = () => {
 
   let orders;
 
-  const message = useSelector((store: IRootState) => store.wsReducer.message);
+  const message = useSelector((store) => store.wsReducer.message);
 
   if (message) {
     orders = message.orders;

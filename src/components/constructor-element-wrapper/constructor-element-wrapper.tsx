@@ -5,19 +5,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
-
 import styles from "./constructor-element-wrapper.module.css";
-
 import { useDrag, useDrop } from "react-dnd";
 import type { Identifier, XYCoord } from 'dnd-core'
-import { useSelector, useDispatch } from "react-redux";
 import {
   DEL_COMPONENT,
   CALC_SAUCE_COUNTER,
   CALC_MAIN_COUNTER,
 } from "../../services/actions/ingredients-actions";
-
 import { IRootState, IBurgerIngredientForConstructor, TDragCallback } from "../../utils/interfaces-and-types";
+import { useDispatch, useSelector } from "../../utils/hooks";
 
 interface IDragAndDropItem {
   id: string;
@@ -33,7 +30,7 @@ interface IConstructorElementWrapperProps {
 const ConstructorElementWrapper: React.FC<IConstructorElementWrapperProps> = ({ item, index, moveCard }) => {
   const dispatch = useDispatch();
   const { sauceList, mainList } = useSelector(
-    (store: IRootState) => store.burgerIngredientsReducer
+    (store) => store.burgerIngredientsReducer
   );
 
   const ref = React.useRef<HTMLDivElement>(null);

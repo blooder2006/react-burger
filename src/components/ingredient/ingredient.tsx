@@ -4,10 +4,10 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient.module.css";
-import { useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 import { IBurgerIngredientForList } from "../../utils/interfaces-and-types";
+import { useDispatch } from "../../utils/hooks";
 
 interface IIngredientProps {
   ingredient: IBurgerIngredientForList;

@@ -159,12 +159,12 @@ export const postLogin: AppThunk = (
 
 //запрос на выход пользователя
 export const postLogout: AppThunk = (url: string, token: ILogoutToken) => {
-  return function (dispatch: AppDispatch) {
+  return async function (dispatch: AppDispatch) {
     dispatch({
       type: POST_LOGOUT_REQUEST,
     });
 
-    return fetch(url, {
+    return await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",

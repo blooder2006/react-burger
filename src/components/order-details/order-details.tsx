@@ -3,16 +3,14 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./order-details.module.css";
 import detailsLogo from "../../images/details-logo.svg";
-
-import { useSelector } from "react-redux";
-
-import {IRootState} from "../../utils/interfaces-and-types";
+import { useSelector } from "../../utils/hooks";
 
 const OrderDetails: React.FC   = () => {
-  const { orderNumber } = useSelector((store: IRootState) => store.orderReducer);
+  const { orderNumber } = useSelector((store) => store.orderReducer);
 
   return (
     <div className={`${styles.orderDetailsMain} mt-30`}>
+      { orderNumber ? <>
       <div className={`${styles.digitsShadow} text_type_digits-large mb-8`}>
         {orderNumber}
       </div>
@@ -29,7 +27,10 @@ const OrderDetails: React.FC   = () => {
       </div>
       <div className={`text text_type_main-default text_color_inactive mb-30`}>
         Дождитесь готовности на орбитальной станции
-      </div>
+      </div></>
+      : <div className={`text text_type_main-default mb-30`}>
+     Пожалуйста, подождите</div>
+}
     </div>
   );
 };

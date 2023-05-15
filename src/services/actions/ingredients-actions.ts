@@ -32,24 +32,24 @@ interface IGetIngredientsResponse {
 
 export interface IFillIngredientsListAction {
   readonly type: typeof FILL_INGREDIENTS_LIST;
-  readonly bunList: Array<IBurgerIngredientFromApi>;
-  readonly sauceList: Array<IBurgerIngredientFromApi>;
-  readonly mainList: Array<IBurgerIngredientFromApi>;
+  readonly bunList: Array<IBurgerIngredientForList>;
+  readonly sauceList: Array<IBurgerIngredientForList>;
+  readonly mainList: Array<IBurgerIngredientForList>;
 }
 
 export interface ICalcBunCounterAction {
   readonly type: typeof CALC_BUN_COUNTER;
-  readonly bunList: Array<IBurgerIngredientFromApi>;
+  readonly bunList: Array<IBurgerIngredientForList>;
 }
 
 export interface ICalcSauceCounterAction {
   readonly type: typeof CALC_SAUCE_COUNTER;
-  readonly sauceList: Array<IBurgerIngredientFromApi>;
+  readonly sauceList: Array<IBurgerIngredientForList>;
 }
 
 export interface ICalcMainCounterAction {
   readonly type: typeof CALC_MAIN_COUNTER;
-  readonly mainList: Array<IBurgerIngredientFromApi>;
+  readonly mainList: Array<IBurgerIngredientForList>;
 }
 
 export interface IChangeSelectedIngredientsAction {

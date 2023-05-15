@@ -9,8 +9,8 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./pages.module.css";
 import {  patchUser } from "../services/actions/user-actions";
 import { BASE_URL, USER_INFO_ENDPOINT } from "../utils/urls";
-import { useSelector, useDispatch } from "react-redux";
-import { IRootState, IPatchUserRequest } from "../utils/interfaces-and-types";
+import { IPatchUserRequest } from "../utils/interfaces-and-types";
+import { useDispatch, useSelector } from "../utils/hooks";
 
 export const ProfilePage: React.FC = () => {
   const [userPassword, setUserPassword] = React.useState("");
@@ -18,9 +18,9 @@ export const ProfilePage: React.FC = () => {
   const [userName, setUserName] = React.useState("");
   const [buttonsAreHidden, setButtonsAreHidden] = React.useState(true);
   const { userProfile } = useSelector(
-    (store: IRootState) => store.profileReducer
+    (store) => store.profileReducer
   );
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (userProfile) {

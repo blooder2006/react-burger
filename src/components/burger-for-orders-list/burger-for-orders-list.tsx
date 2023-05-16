@@ -7,7 +7,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-for-orders-list.module.css";
 import { useLocation, Link } from "react-router-dom";
-import { IBackground } from "../../utils/interfaces-and-types";
 import { burgerStatuses } from "../../utils/burger-status";
 import IngredientImage from "../ingredient-image/ingredient-image";
 import { IBurgerForOrderListProps } from "../../utils/interfaces-and-types";
@@ -22,7 +21,6 @@ const BurgerForOrderList: React.FC<IBurgerForOrderListProps> = ({
   orderCreatedAt,
 }) => {
   const location = useLocation();
-  const background: IBackground = location.state && location.state.background;
 
   const { allIngredients } = useSelector(
     (store) => store.getAllIngredientsReducer
@@ -62,7 +60,7 @@ const BurgerForOrderList: React.FC<IBurgerForOrderListProps> = ({
   const visibleIngredientIcons = allIngredientIcons
     .slice(0, 6)
     .map((el, index: number) => {
-      if (el != undefined) {
+      if (el !== undefined) {
         return (
           <IngredientImage
             key={index}

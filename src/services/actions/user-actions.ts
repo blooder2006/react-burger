@@ -116,9 +116,9 @@ export const patchUser: AppThunk = (
 };
 
 //проверка авторизации
-export const checkUserAuth: AppThunk = () => {return function (dispatch: AppDispatch) {
+export const checkUserAuth: AppThunk = () => {return async function (dispatch: AppDispatch) {
   if (getCookie("accessToken")) {
-    dispatch(getUser(`${BASE_URL}${USER_INFO_ENDPOINT}`));
+    await dispatch(getUser(`${BASE_URL}${USER_INFO_ENDPOINT}`));
   }
     dispatch({
       type: CHECKED_USER_AUTH,

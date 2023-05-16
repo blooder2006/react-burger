@@ -23,7 +23,7 @@ export const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
 
   if (onlyUnAuth && userProfile) {
     const from = (location.state as LocationState)?.from || { pathname: "/" };
-    return <Navigate to={from} />;
+    return <Navigate to={from} />;  
   }
 
   if (!onlyUnAuth && !userProfile) {

@@ -33,7 +33,7 @@ const OrdersList: React.FC = () => {
         BASE_URL,
         REFRESH_TOKEN_ENDPOINT
       );
-      saveTokens(refreshToken, accessToken.split("Bearer ")[1]);
+    saveTokens(refreshToken, accessToken.split("Bearer ")[1]);
     })();
 
     dispatch({

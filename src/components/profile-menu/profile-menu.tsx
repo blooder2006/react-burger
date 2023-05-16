@@ -10,10 +10,12 @@ import { BASE_URL, LOGOUT_ENDPOINT } from "../../utils/urls";
 import { DEL_USER_INFO } from "../../services/actions/user-actions";
 import { useDispatch } from "../../utils/hooks";
 
+
 export const ProfileMenu: React.FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleExitClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     const logoutToken: ILogoutToken = {

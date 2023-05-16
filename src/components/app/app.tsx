@@ -41,8 +41,9 @@ const App: React.FC = () => {
   );
 
   React.useEffect(() => {
-    dispatch(getAllIngredients(`${BASE_URL}${DATA_ENDPOINT}`));
     dispatch(checkUserAuth());
+    dispatch(getAllIngredients(`${BASE_URL}${DATA_ENDPOINT}`));
+    
   }, [dispatch]);
 
   React.useEffect(() => {

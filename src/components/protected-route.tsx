@@ -1,6 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { IRootState } from "../utils/interfaces-and-types";
+import { useSelector } from "../utils/hooks";
 
 interface IProtectedRouteProps {
   onlyUnAuth: boolean;
@@ -13,29 +12,32 @@ interface LocationState {
   };
 }
 
-
-
-
-export const ProtectedRoute: React.FC<IProtectedRouteProps>  = ({ onlyUnAuth = false, element }) => {
-  const { userProfile } = useSelector((store: IRootState) => store.profileReducer);
+export const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
+  onlyUnAuth = false,
+  element,
+}) => {
+  const { userProfile } = useSelector(
+    (store) => store.profileReducer
+  );
   const location = useLocation();
 
   if (onlyUnAuth && userProfile) {
     const from = (location.state as LocationState)?.from || { pathname: "/" };
-    return <Navigate to={from} />;
+    return <Navigate to={from} />;  
   }
 
   if (!onlyUnAuth && !userProfile) {
-    return <Navigate to={{ pathname: "/login"}} state={{ from: location }}/>;
+    return <Navigate to={{ pathname: "/login" }} state={{ from: location }} />;
   }
 
   if (location.pathname === "/reset-password" && !location.state?.fromForgot) {
     return (
       <Navigate
-        to={{ pathname: "/forgot-password"}} state= {{ from: location }}/>
+        to={{ pathname: "/forgot-password" }}
+        state={{ from: location }}
+      />
     );
   }
-  
-  return <>{element}</>;
 
+  return <>{element}</>;
 };

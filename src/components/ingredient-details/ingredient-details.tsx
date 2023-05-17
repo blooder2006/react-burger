@@ -2,18 +2,16 @@ import React from "react";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./ingredient-details.module.css";
-
-import { useSelector } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
-
-import {IRootState, IBackground} from "../../utils/interfaces-and-types";
+import {IBackground} from "../../utils/interfaces-and-types";
+import { useSelector } from "../../utils/hooks";
 
 const IngredientDetails: React.FC = () => {
   const { id } = useParams();
-  const { modalVisible } = useSelector((store: IRootState) => store.modalReducer);
+  
   const location = useLocation();
   const background: IBackground = location.state && location.state.background;
-  const ingredientFromSearch = useSelector((store: IRootState) => {
+  const ingredientFromSearch = useSelector((store) => {
     return store.getAllIngredientsReducer.allIngredients.find(
       (item) => item._id === id
     );

@@ -5,6 +5,7 @@ import { RegisterPage } from "../../pages/register";
 import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { ResetPasswordPage } from "../../pages/reset-password";
 import { ProfilePage } from "../../pages/profile";
+import { FeedPage } from "../../pages/feed";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "./app.module.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
@@ -12,7 +13,9 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
-import { useSelector, useDispatch } from "react-redux";
+import BurgerDetails from "../burger-details/burger-details";
+import OrdersList from "../orders-list/orders-list";
+import { ProfileMenu } from "../profile-menu/profile-menu";
 import { getAllIngredients } from "../../services/actions/ingredients-actions";
 import { checkUserAuth } from "../../services/actions/user-actions";
 import { BASE_URL, DATA_ENDPOINT } from "../../utils/urls";
@@ -23,19 +26,24 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { ProtectedRoute } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found-404";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "../../utils/hooks";
+import { IBackground } from "../../utils/interfaces-and-types";
 
-import { IRootState, IBackground } from "../../utils/interfaces-and-types";
-
-const App : React.FC  = () => {
-  const { isAuthChecked } = useSelector((store: IRootState) => store.profileReducer);
-  const dispatch = useDispatch<any>();
+const App: React.FC = () => {
+  
+  const { isAuthChecked } = useSelector(
+    (store) => store.profileReducer
+  );
+  
+  const dispatch = useDispatch();
   const { allIngredients } = useSelector(
-    (store: IRootState) => store.getAllIngredientsReducer
+    (store) => store.getAllIngredientsReducer
   );
 
   React.useEffect(() => {
-    dispatch(getAllIngredients(`${BASE_URL}${DATA_ENDPOINT}`));
     dispatch(checkUserAuth());
+    dispatch(getAllIngredients(`${BASE_URL}${DATA_ENDPOINT}`));
+    
   }, [dispatch]);
 
   React.useEffect(() => {
@@ -97,16 +105,45 @@ const App : React.FC  = () => {
                 ></ProtectedRoute>
               }
             />
+
             <Route
               path="/profile"
               element={
-                <ProtectedRoute onlyUnAuth={false} element={<ProfilePage />}></ProtectedRoute>
+                <ProtectedRoute
+                  onlyUnAuth={false}
+                  element={
+                    <>
+                      <ProfileMenu />
+                      <ProfilePage />
+                    </>
+                  }
+                ></ProtectedRoute>
               }
-            >
-              <Route path="orders" element={<div>Loading</div>}>
-                <Route path=":id" element={<div>Loading</div>} />
-              </Route>
-            </Route>
+            />
+            <Route
+              path="/profile/orders"
+              element={
+                <ProtectedRoute
+                  onlyUnAuth={false}
+                  element={
+                    <>
+                      <ProfileMenu />
+                      <OrdersList />
+                    </>
+                  }
+                ></ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile/orders/:id"
+              element={
+                <ProtectedRoute
+                  onlyUnAuth={false}
+                  element={<BurgerDetails />}
+                ></ProtectedRoute>
+              }
+            />
+
             <Route
               path="/register"
               element={
@@ -136,6 +173,9 @@ const App : React.FC  = () => {
             />
             <Route path="/ingredients/:id" element={<IngredientDetails />} />
             <Route path="*" element={<NotFoundPage />} />
+
+            <Route path="/feed" element={<FeedPage />} />
+            <Route path="/feed/:id" element={<BurgerDetails />} />
           </Routes>
 
           {background && (
@@ -146,6 +186,26 @@ const App : React.FC  = () => {
                   <div className={`${styles.modal}`}>
                     <Modal onClose={handleModalClose}>
                       <IngredientDetails />
+                    </Modal>
+                  </div>
+                }
+              />
+              <Route
+                path="/feed/:id"
+                element={
+                  <div className={`${styles.modal}`}>
+                    <Modal onClose={handleModalClose}>
+                      <BurgerDetails />
+                    </Modal>
+                  </div>
+                }
+              />
+              <Route
+                path="/profile/orders/:id"
+                element={
+                  <div className={`${styles.modal}`}>
+                    <Modal onClose={handleModalClose}>
+                      <BurgerDetails />
                     </Modal>
                   </div>
                 }

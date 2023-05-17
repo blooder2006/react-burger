@@ -1,20 +1,16 @@
 import React from "react";
-
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
-
 import styles from "./pages.module.css";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { checkUserAuth } from "../services/actions/user-actions";
-
-import { IRootState } from "../utils/interfaces-and-types";
+import { useDispatch, useSelector } from "../utils/hooks";
 
 export const IngredientDetailsPage: React.FC = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const { id } = useParams();
 
-  const item = useSelector((store: IRootState) => {
+  const item = useSelector((store) => {
     return store.getAllIngredientsReducer.allIngredients.find(
       (item) => item._id === id
     );

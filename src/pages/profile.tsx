@@ -4,31 +4,23 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
-
 import styles from "./pages.module.css";
-import { postLogout } from "../services/actions/auth-actions";
-import { DEL_USER_INFO, patchUser } from "../services/actions/user-actions";
-import { BASE_URL, LOGOUT_ENDPOINT, USER_INFO_ENDPOINT } from "../utils/urls";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { deleteCookie } from "../utils/auth";
-import { useLocation, Link } from "react-router-dom";
-
-import { IRootState, IPatchUserRequest } from "../utils/interfaces-and-types";
-import { ILogoutToken } from "../services/actions/auth-actions";
+import {  patchUser } from "../services/actions/user-actions";
+import { BASE_URL, USER_INFO_ENDPOINT } from "../utils/urls";
+import { IPatchUserRequest } from "../utils/interfaces-and-types";
+import { useDispatch, useSelector } from "../utils/hooks";
 
 export const ProfilePage: React.FC = () => {
-  const location = useLocation();
   const [userPassword, setUserPassword] = React.useState("");
   const [userEmail, setUserEmail] = React.useState("");
   const [userName, setUserName] = React.useState("");
   const [buttonsAreHidden, setButtonsAreHidden] = React.useState(true);
-  const { userProfile } = useSelector((store: IRootState) => store.profileReducer);
-  const navigate = useNavigate();
-  const dispatch = useDispatch<any>();
+  const { userProfile } = useSelector(
+    (store) => store.profileReducer
+  );
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (userProfile) {
@@ -92,120 +84,59 @@ export const ProfilePage: React.FC = () => {
     dispatch(patchUser(`${BASE_URL}${USER_INFO_ENDPOINT}`, userAttrs));
   };
 
-  const logoutAndDelUserInfo = (logoutToken: ILogoutToken ) => {
-    return (dispatch: any) => {
-      dispatch(postLogout(`${BASE_URL}${LOGOUT_ENDPOINT}`, logoutToken)).then(
-        () => {
-          dispatch({ type: DEL_USER_INFO });
-          deleteCookie("accessToken");
-          localStorage.removeItem("refreshToken");
-          navigate("/", { replace: true });
-        }
-      );
-    };
-  };
-
-  const handleExitClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const logoutToken: ILogoutToken = { token: localStorage.getItem("refreshToken") };
-    dispatch(logoutAndDelUserInfo(logoutToken));
-  };
-
   return (
     <>
-      <div className={`${styles.profileTabs}`}>
-        <div className={`${styles.profileTab}`}>
-          <Link
-            to={{ pathname: `/profile` }}
-            className={`${styles.tabLink} text text_type_main-medium ${
-              location.pathname === "/profile"
-                ? "text_color_primary"
-                : "text_color_inactive"
-            }`}
-          >
-            Профиль
-          </Link>
-        </div>
-        <div className={`${styles.profileTab}`}>
-          <Link
-            to={{ pathname: `/profile/orders` }}
-            className={`${styles.tabLink} text text_type_main-medium ${
-              location.pathname.includes("/profile/orders")
-                ? "text_color_primary"
-                : "text_color_inactive"
-            }`}
-          >
-            История заказов
-          </Link>
-        </div>
-        <div className={`${styles.profileTab} mb-20`}>
-          <Link
-            to={{ pathname: `/` }}
-            className={`${styles.tabLink} text text_type_main-medium text_color_inactive`}
-            onClick={handleExitClick}
-          >
-            Выход
-          </Link>
-        </div>
-        <p className="text text_type_main-default text_color_inactive">
-          В этом разделе вы можете изменить свои персональные данные
-        </p>
-      </div>
       <div className={`${styles.profilePage}`}>
-        {location.pathname === "/profile" ? (
-          <form onSubmit={handleSaveClick}>
-            <div className={`${styles.profileInputs}`}>
+        <form onSubmit={handleSaveClick}>
+          <div className={`${styles.profileInputs}`}>
+            <div>
+              <EmailInput
+                placeholder={"Имя"}
+                name="userName"
+                value={userName}
+                onChange={handleChange}
+                isIcon={true}
+              />
+            </div>
+            <div className={`mt-6`}>
+              <EmailInput
+                placeholder={"Логин"}
+                name="userEmail"
+                value={userEmail}
+                onChange={handleChange}
+                isIcon={true}
+              />
+            </div>
+            <div className={`mt-6`}>
+              <PasswordInput
+                placeholder={"Пароль"}
+                name="userPassword"
+                value={userPassword}
+                onChange={handleChange}
+                icon={"EditIcon"}
+              />
+            </div>
+          </div>
+
+          {buttonsAreHidden ? null : (
+            <div className={`${styles.bottomButtons} mt-6`}>
               <div>
-                <EmailInput
-                  placeholder={"Имя"}
-                  name="userName"
-                  value={userName}
-                  onChange={handleChange}
-                  isIcon={true}
-                  
-                />
+                <Button
+                  htmlType="button"
+                  type="secondary"
+                  onClick={handleCancelClick}
+                >
+                  Отмена
+                </Button>
               </div>
-              <div className={`mt-6`}>
-                <EmailInput
-                  placeholder={"Логин"}
-                  name="userEmail"
-                  value={userEmail}
-                  onChange={handleChange}
-                  isIcon={true}
-                />
-              </div>
-              <div className={`mt-6`}>
-                <PasswordInput
-                  placeholder={"Пароль"}
-                  name="userPassword"
-                  value={userPassword}
-                  onChange={handleChange}
-                  icon={"EditIcon"}
-                 
-                />
+              <div>
+                <Button htmlType="submit" type="primary">
+                  Сохранить
+                </Button>
               </div>
             </div>
-
-            {buttonsAreHidden ? null : (
-              <div className={`${styles.bottomButtons} mt-6`}>
-                <div>
-                  <Button
-                    htmlType="button"
-                    type="secondary"
-                    onClick={handleCancelClick}
-                  >
-                    Отмена
-                  </Button>
-                </div>
-                <div>
-                  <Button htmlType="submit" type="primary">
-                    Сохранить
-                  </Button>
-                </div>
-              </div>
-            )}
-          </form>
-        ) : null}
+          )}
+        </form>
       </div>
     </>
   );

@@ -4,13 +4,16 @@ import {
   GET_ORDER_FAIL,
 } from "../actions/order-actions";
 
-const initialState = {
+import type { TOrderActions } from "../actions/order-actions";
+import { IOrderState } from "../../utils/interfaces-and-types";
+
+const initialState: IOrderState = {
   orderNumber: null,
   loading: false,
   error: null,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {

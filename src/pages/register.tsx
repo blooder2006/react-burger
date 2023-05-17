@@ -5,20 +5,15 @@ import {
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
-
 import styles from "./pages.module.css";
-
 import { postRegisterUser } from "../services/actions/auth-actions";
 import { BASE_URL, REGISTER_USER_ENDPOINT } from "../utils/urls";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveTokens } from "../utils/auth";
-
-import { IRootState } from "../utils/interfaces-and-types";
 import { IRegisterUserRequest } from "../services/actions/auth-actions";
+import { useDispatch, useSelector } from "../utils/hooks";
 
 export const RegisterPage: React.FC = () => {
   const [userName, setUserName] = React.useState("");
@@ -26,10 +21,10 @@ export const RegisterPage: React.FC = () => {
   const [userEmail, setUserEmail] = React.useState("");
 
   const { accessToken, refreshToken } = useSelector(
-    (store: IRootState) => store.registerReducer
+    (store) => store.registerReducer
   );
   const navigate = useNavigate();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent) => {
     switch ((e.target as HTMLInputElement).name) {
@@ -76,7 +71,7 @@ export const RegisterPage: React.FC = () => {
 
   return (
     <div className={`${styles.inputPage}`}>
-      <p className="text text_type_main-medium">Регистрация</p>
+      <p className={`text text_type_main-medium`}>Регистрация</p>
       <form className={`${styles.form}`} onSubmit={handleSubmit}>
         <div className={`mt-6`}>
           <Input
@@ -101,13 +96,11 @@ export const RegisterPage: React.FC = () => {
           />
         </div>
         <div className={`mt-6 mb-20`}>
-          <Button htmlType="submit" >
-            Зарегистрироваться
-          </Button>
+          <Button htmlType="submit">Зарегистрироваться</Button>
         </div>
       </form>
       <div className={`${styles.linkBox}`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Уже зарегистрированы?
         </p>
         <div>

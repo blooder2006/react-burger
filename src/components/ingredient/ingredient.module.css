@@ -2,15 +2,13 @@
     display: flex;
     gap: 8px;
     align-items: center;
-    justify-content: center;
-    
+    justify-content: center;    
   }
   
   .ingredient {
     text-align: center;
     width: 272px;
-    position: relative;
-    
+    position: relative;    
   }
   
   .ingredientName {

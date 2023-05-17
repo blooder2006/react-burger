@@ -4,31 +4,25 @@ import {
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
-
 import styles from "./pages.module.css";
-
 import { postLogin } from "../services/actions/auth-actions";
 import { getUser } from "../services/actions/user-actions";
 import { BASE_URL, LOGIN_ENDPOINT, USER_INFO_ENDPOINT } from "../utils/urls";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveTokens } from "../utils/auth";
+import { useDispatch, useSelector } from "../utils/hooks";
 
-import { IRootState } from "../utils/interfaces-and-types";
-import { ILoginRequest } from "../services/actions/auth-actions";
-
-export const LoginPage: React.FC  = () => {
+export const LoginPage: React.FC = () => {
   const [userPassword, setUserPassword] = React.useState("");
   const [userEmail, setUserEmail] = React.useState("");
 
   const { accessToken, refreshToken } = useSelector(
-    (store: IRootState) => store.loginLogoutReducer
+    (store) => store.loginLogoutReducer
   );
   const navigate = useNavigate();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent) => {
     switch ((e.target as HTMLInputElement).name) {
@@ -46,18 +40,11 @@ export const LoginPage: React.FC  = () => {
     }
   };
 
-  const loginAndGetUser = (loginRequest: ILoginRequest) => {
-    return (dispatch: any) => {
-      dispatch(postLogin(`${BASE_URL}${LOGIN_ENDPOINT}`, loginRequest)).then(
-        () => dispatch(getUser(`${BASE_URL}${USER_INFO_ENDPOINT}`))
-      );
-    };
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const loginRequest = { password: userPassword, email: userEmail };
-    dispatch(loginAndGetUser(loginRequest));
+    const loginRequest = { password: userPassword, email: userEmail };    
+    await dispatch(postLogin(`${BASE_URL}${LOGIN_ENDPOINT}`, loginRequest));
+    dispatch(getUser(`${BASE_URL}${USER_INFO_ENDPOINT}`)) ;
   };
 
   React.useEffect(() => {
@@ -70,7 +57,7 @@ export const LoginPage: React.FC  = () => {
 
   return (
     <div className={`${styles.inputPage}`}>
-      <p className="text text_type_main-medium">Вход</p>
+      <p className={`text text_type_main-medium`}>Вход</p>
       <form className={`${styles.form}`} onSubmit={handleSubmit}>
         <div className={`mt-6`}>
           <EmailInput
@@ -91,7 +78,7 @@ export const LoginPage: React.FC  = () => {
         </div>
       </form>
       <div className={`${styles.linkBox} mb-4`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Вы — новый пользователь?
         </p>
         <div>
@@ -104,7 +91,7 @@ export const LoginPage: React.FC  = () => {
         </div>
       </div>
       <div className={`${styles.linkBox}`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Забыли пароль?
         </p>
         <div>

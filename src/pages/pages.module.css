@@ -30,25 +30,6 @@
 
 }
 
-.profileTabs {
-    width: 320px;
-    position: absolute; 
-    top: 228px;
-    left: 50%;
-    transform: translate(-619px, 0%);
-    display: flex;
-    flex-direction: column;
-
-}
-
-.profileTab {
-    height: 64px;
-}
-
-.tabLink {
-    text-decoration: none;   
-}
-
 .profileInputs {
     display: flex;
     flex-direction: column;

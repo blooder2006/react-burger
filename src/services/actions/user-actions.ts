@@ -1,27 +1,74 @@
 import { fetchWithRefresh } from "../../utils/auth";
 import { getCookie } from "../../utils/auth";
 import { BASE_URL, USER_INFO_ENDPOINT } from "../../utils/urls";
-import { Dispatch } from 'redux';
-import { IPatchUserRequest, IGetUserResponse } from "../../utils/interfaces-and-types";
+import {
+  IPatchUserRequest,
+  IGetUserResponse,
+  IUser,
+} from "../../utils/interfaces-and-types";
+import { AppDispatch } from "../../utils/interfaces-and-types";
+import { AppThunk } from "../../utils/interfaces-and-types";
 
-export const SET_USER_INFO = "SET_USER_INFO";
-export const SET_USER_INFO_FAIL = "SET_USER_INFO_FAIL";
-export const DEL_USER_INFO = "DEL_USER_INFO";
-export const CHECKED_USER_AUTH = "CHECKED_USER_AUTH";
-export const PATCH_USER_INFO_REQUEST = "PATCH_USER_INFO_REQUEST";
-export const PATCH_USER_INFO_SUCCESS = "PATCH_USER_INFO_SUCCESS";
-export const PATCH_USER_INFO_FAIL = "PATCH_USER_INFO_FAIL";
+export const SET_USER_INFO: "SET_USER_INFO" = "SET_USER_INFO";
+export const SET_USER_INFO_FAIL: "SET_USER_INFO_FAIL" = "SET_USER_INFO_FAIL";
+export const DEL_USER_INFO: "DEL_USER_INFO" = "DEL_USER_INFO";
+export const CHECKED_USER_AUTH: "CHECKED_USER_AUTH" = "CHECKED_USER_AUTH";
+export const PATCH_USER_INFO_REQUEST: "PATCH_USER_INFO_REQUEST" =
+  "PATCH_USER_INFO_REQUEST";
+export const PATCH_USER_INFO_SUCCESS: "PATCH_USER_INFO_SUCCESS" =
+  "PATCH_USER_INFO_SUCCESS";
+export const PATCH_USER_INFO_FAIL: "PATCH_USER_INFO_FAIL" =
+  "PATCH_USER_INFO_FAIL";
+
+export interface ISetUserInfoAction {
+  readonly type: typeof SET_USER_INFO;
+  readonly payload: IUser;
+}
+
+export interface ISetIserInfoFailAction {
+  readonly type: typeof SET_USER_INFO_FAIL;
+  readonly payload: string;
+}
+
+export interface IDelUserInfoAction {
+  readonly type: typeof DEL_USER_INFO;
+}
+
+export interface ICheckedUserAuthAction {
+  readonly type: typeof CHECKED_USER_AUTH;
+}
+
+export interface IPatchUserInfoRequestAction {
+  readonly type: typeof PATCH_USER_INFO_REQUEST;
+}
+
+export interface IPatchUserInfoSuccessAction {
+  readonly type: typeof PATCH_USER_INFO_SUCCESS;
+}
+
+export interface IPatchUserInfoFailAction {
+  readonly type: typeof PATCH_USER_INFO_FAIL;
+}
+
+export type TUserActions =
+  | ISetUserInfoAction
+  | ISetIserInfoFailAction
+  | IDelUserInfoAction
+  | ICheckedUserAuthAction
+  | IPatchUserInfoRequestAction
+  | IPatchUserInfoSuccessAction
+  | IPatchUserInfoFailAction;
 
 //запрос на получение данных пользователя
-export function getUser(url: string) {
-  return function (dispatch: Dispatch) {
+export const getUser: AppThunk = (url: string) => {
+  return async function (dispatch: AppDispatch) {
     const getUserInfoOptions = {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
         authorization: "Bearer " + getCookie("accessToken"),
       },
     };
-    return fetchWithRefresh(url, getUserInfoOptions)
+    return await fetchWithRefresh(url, getUserInfoOptions)
       .then((dataJson: IGetUserResponse) => {
         dispatch({
           type: SET_USER_INFO,
@@ -36,11 +83,14 @@ export function getUser(url: string) {
         });
       });
   };
-}
+};
 
 //запрос на изменение данных пользователя
-export function patchUser(url: string, userAttrs: IPatchUserRequest) {
-  return function (dispatch: Dispatch) {
+export const patchUser: AppThunk = (
+  url: string,
+  userAttrs: IPatchUserRequest
+) => {
+  return function (dispatch: AppDispatch) {
     const patchUserInfoOptions = {
       method: "PATCH",
       headers: {
@@ -63,19 +113,15 @@ export function patchUser(url: string, userAttrs: IPatchUserRequest) {
         });
       });
   };
-}
+};
 
 //проверка авторизации
-export const checkUserAuth = () => (dispatch: any) => {
+export const checkUserAuth: AppThunk = () => {return async function (dispatch: AppDispatch) {
   if (getCookie("accessToken")) {
-    dispatch(getUser(`${BASE_URL}${USER_INFO_ENDPOINT}`)).finally(() => {
-      dispatch({
-        type: CHECKED_USER_AUTH,
-      });
-    });
-  } else {
+    await dispatch(getUser(`${BASE_URL}${USER_INFO_ENDPOINT}`));
+  }
     dispatch({
       type: CHECKED_USER_AUTH,
     });
-  }
-};
+
+}};

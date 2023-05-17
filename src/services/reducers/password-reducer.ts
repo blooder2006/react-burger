@@ -7,7 +7,10 @@ import {
   POST_RESET_PSWD_FAIL,
 } from "../actions/password-actions";
 
-const initialState = {
+import type { TPasswordActions } from "../actions/password-actions";
+import { IPasswordState } from "../../utils/interfaces-and-types";
+
+const initialState: IPasswordState = {
   messageForForgot: null,
   messageForReset: null,
   loading: false,
@@ -16,7 +19,7 @@ const initialState = {
   emailForReset: null,
 };
 
-export const passwordReducer = (state = initialState, action) => {
+export const passwordReducer = (state = initialState, action: TPasswordActions) => {
   switch (action.type) {
     case POST_FORGOT_PSWD_REQUEST: {
       return {

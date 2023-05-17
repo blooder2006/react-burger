@@ -5,7 +5,10 @@ import {
   SET_DETAILS,
 } from "../actions/modal-actions";
 
-const initialState = {
+import type { TModalActions } from "../actions/modal-actions";
+import { IModalState } from "../../utils/interfaces-and-types";
+
+const initialState: IModalState = {
   modalVisible: false,
   header: "",
   modalContent: {},
@@ -13,7 +16,7 @@ const initialState = {
   useNavBackStep: false,
 };
 
-export const modalReducer = (state = initialState, action) => {
+export const modalReducer = (state = initialState, action: TModalActions) => {
   switch (action.type) {
     case SHOW_MODAL: {
       return {

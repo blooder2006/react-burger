@@ -4,27 +4,22 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
-
 import styles from "./pages.module.css";
-
 import { postResetPassword } from "../services/actions/password-actions";
 import { BASE_URL, RESET_PSWD_ENDPOINT } from "../utils/urls";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "../utils/hooks";
 
-import { IRootState } from "../utils/interfaces-and-types";
-
-export const ResetPasswordPage: React.FC  = () => {
+export const ResetPasswordPage: React.FC = () => {
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmCode, setConfirmCode] = React.useState("");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const { loading, errorForReset } = useSelector(
-    (store: IRootState) => store.passwordReducer
+    (store) => store.passwordReducer
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -59,7 +54,7 @@ export const ResetPasswordPage: React.FC  = () => {
 
   return (
     <div className={`${styles.inputPage}`}>
-      <p className="text text_type_main-medium">Восстановление пароля</p>
+      <p className={`text text_type_main-medium`}>Восстановление пароля</p>
       <form className={`${styles.form}`} onSubmit={handleSubmit}>
         <div className={`mt-6`}>
           <PasswordInput
@@ -78,13 +73,11 @@ export const ResetPasswordPage: React.FC  = () => {
           />
         </div>
         <div className={`mt-6 mb-20`}>
-          <Button htmlType="submit">
-            Сохранить
-          </Button>
+          <Button htmlType="submit">Сохранить</Button>
         </div>
       </form>
       <div className={`${styles.linkBox}`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Вспомнили пароль?
         </p>
         <div>

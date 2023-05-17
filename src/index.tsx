@@ -1,31 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './components/app/app';
-import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import { compose, createStore, applyMiddleware } from 'redux';
-import { rootReducer } from './services/reducers/root-reducer';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./components/app/app";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import { createStore, applyMiddleware } from "redux";
+import { rootReducer } from "./services/reducers/root-reducer";
+import { composeWithDevTools } from "@redux-devtools/extension";
+import { socketMiddleware } from "./middleware/socketMiddleware";
+import { TWSStoreActions } from "./services/actions/ws-actions";
 
-/*declare global {
-  interface Window {
-  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-};*/
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_ERROR,
+  WS_CONNECTION_START,
+  WS_CONNECTION_SUCCESS,
+  WS_GET_MESSAGE,
+  WS_SEND_MESSAGE,
+} from "./services/actions/ws-actions";
 
-/*const composeEnhancers =
-  typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
-    : compose; */
+const wsActions: TWSStoreActions = {
+  wsInit: WS_CONNECTION_START,
+  wsSendMessage: WS_SEND_MESSAGE,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_MESSAGE,
+};
 
-//const enhancer = composeEnhancers();
-
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+export const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk, socketMiddleware(wsActions)))
+);
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>

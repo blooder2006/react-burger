@@ -5,13 +5,16 @@ import {
   SET_USER_INFO_FAIL
 } from "../actions/user-actions";
 
-const initialState = {
+import type { TUserActions } from "../actions/user-actions";
+import { IProfileState } from "../../utils/interfaces-and-types";
+
+const initialState: IProfileState = {
   userProfile: null,
   isAuthChecked: false,
   error: null
 };
 
-export const profileReducer = (state = initialState, action) => {
+export const profileReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case SET_USER_INFO: {
       return {

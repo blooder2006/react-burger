@@ -9,10 +9,8 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./burger-constructor.module.css";
 import appStyles from "../app/app.module.css";
 import OrderDetails from "../order-details/order-details";
-
 import { getOrder } from "../../services/actions/order-actions";
 import { BASE_URL, ORDER_ENDPOINT } from "../../utils/urls";
-import { useSelector, useDispatch } from "react-redux";
 import {
   ADD_COMPONENT,
   CHANGE_SELECTED_INGREDIENTS,
@@ -27,35 +25,29 @@ import { v4 as uuidv4 } from "uuid";
 import ConstructorElementWrapper from "../constructor-element-wrapper/constructor-element-wrapper";
 import Modal from "../modal/modal";
 import { useNavigate } from "react-router-dom";
+import {
+  IBurgerRequest,
+  IBurgerIngredientForList,
+  TDragCallback,
+} from "../../utils/interfaces-and-types";
+import { useDispatch, useSelector } from "../../utils/hooks";
 
-import { IBurgerRequest, IRootState, IBurgerIngredientForList, TDragCallback } from "../../utils/interfaces-and-types";
-
-const BurgerConstructor: React.FC  = () => {
+const BurgerConstructor: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { selectedIngredients, selectedBun, totalPrice } = useSelector(
-    (store: IRootState) => store.constructorReducer
+    (store) => store.constructorReducer
   );
 
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
 
   const { bunList, sauceList, mainList } = useSelector(
-    (store: IRootState) => store.burgerIngredientsReducer
+    (store) => store.burgerIngredientsReducer
   );
 
-  const orderAndShowModal = (burgerRequest: IBurgerRequest): any => {
-    return (dispatch: any) => {
-      dispatch(getOrder(`${BASE_URL}${ORDER_ENDPOINT}`, burgerRequest)).then(
-        () => {
-          setModalVisible(true);
-        }
-      );
-    };
-  };
-
   const handleOpenModal = (): void => {
-    const burgerRequest = {
+    const burgerRequest: IBurgerRequest = {
       ingredients: [
         ...selectedIngredients.map((elem) => {
           return elem._id;
@@ -68,11 +60,16 @@ const BurgerConstructor: React.FC  = () => {
     if (!isAuth) {
       navigate("/login");
     } else {
-      dispatch(orderAndShowModal(burgerRequest));
+      dispatch(getOrder(`${BASE_URL}${ORDER_ENDPOINT}`, burgerRequest));
+      setModalVisible(true);
     }
   };
 
-  const [{ isHover }, dropTargerRef] = useDrop<IBurgerIngredientForList, void, { isHover: boolean }>({
+  const [{ isHover }, dropTargerRef] = useDrop<
+    IBurgerIngredientForList,
+    void,
+    { isHover: boolean }
+  >({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -216,7 +213,7 @@ const BurgerConstructor: React.FC  = () => {
         <div className={`text_type_digits-medium`}>
           <span className={`mr-4`}>{totalPrice ? totalPrice : 0}</span>
           <div className={`${styles.totalPriceIcon}`}>
-            <CurrencyIcon type="primary"/>
+            <CurrencyIcon type="primary" />
           </div>
         </div>
         <Button
@@ -243,7 +240,5 @@ const BurgerConstructor: React.FC  = () => {
     </div>
   );
 };
-
-
 
 export default BurgerConstructor;

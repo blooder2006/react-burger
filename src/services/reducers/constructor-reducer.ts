@@ -6,13 +6,16 @@ import {
   ADD_BUN,
 } from "../actions/ingredients-actions";
 
-const initialState = {
+import type { TIngredientsActions } from "../actions/ingredients-actions";
+import { IConstructorState } from "../../utils/interfaces-and-types";
+
+const initialState: IConstructorState = {
   selectedIngredients: [],
-  selectedBun: {},
+  selectedBun: {} as any,
   totalPrice: 0,
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action: TIngredientsActions ) => {
   switch (action.type) {
     case CHANGE_SELECTED_INGREDIENTS: {
       return {

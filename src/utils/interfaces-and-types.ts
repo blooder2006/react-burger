@@ -1,3 +1,43 @@
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { Action, ActionCreator } from "redux";
+import { TAuthActions } from "../services/actions/auth-actions";
+import { TIngredientsActions } from "../services/actions/ingredients-actions";
+import { TModalActions } from "../services/actions/modal-actions";
+import { TOrderActions } from "../services/actions/order-actions";
+import { TPasswordActions } from "../services/actions/password-actions";
+import { TUserActions } from "../services/actions/user-actions";
+import { TFeedActions } from "../services/actions/feed-actions";
+import { TWSActions } from "../services/actions/ws-actions";
+
+import { store } from "..";
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type TApplicationActions =
+  | TAuthActions
+  | TIngredientsActions
+  | TModalActions
+  | TOrderActions
+  | TPasswordActions
+  | TUserActions
+  | TFeedActions
+  | TWSActions;
+
+/*export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>;*/
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, RootState, unknown, TApplicationActions>
+>;
+
+//export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = ThunkDispatch<
+  RootState,
+  unknown,
+  TApplicationActions
+>;
+
 export interface IBurgerRequest {
   ingredients: Array<string>;
 }
@@ -25,15 +65,14 @@ export interface IGetUserResponse {
   };
 }
 
-export interface IRegisterUserAndLoginResponse extends IGetUserResponse{
+export interface IRegisterUserAndLoginResponse extends IGetUserResponse {
   accessToken: string;
   refreshToken: string;
 }
 
-
 export interface IPatchUserRequest {
   name: string;
-  email:string;
+  email: string;
   password: string;
 }
 
@@ -104,7 +143,7 @@ export interface ILoginLogoutState {
   refreshToken: string | null;
   error: string | null;
   message: string | null;
-  userLogedIn: IUser;
+  userLogedIn: IUser | null;
 }
 
 export interface IRegisterState {
@@ -112,6 +151,61 @@ export interface IRegisterState {
   accessToken: string | null;
   refreshToken: string | null;
   error: string | null;
+}
+
+export interface IBurgerOrder {
+  ingredients: Array<string>;
+  _id: string;
+  status: "created" | "pending" | "done";
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+}
+
+export interface IMessageResponse {
+  success: boolean;
+  orders: Array<IBurgerOrder>;
+  total: number;
+  totalToday: number;
+}
+
+export interface IMessage extends Omit<IMessageResponse, "success"> {}
+
+export interface IFeedState {
+  doneOrders: Array<string>;
+  pendingOrders: Array<string>;
+}
+
+export interface IWSState {
+  wsConnected: boolean;
+  message: IMessage | null;
+
+  error?: Event;
+}
+
+export interface IBurgerForOrderListProps {
+  orderId: string;
+  orderName: string;
+  orderNumber: number;
+  orderStatus: "created" | "pending" | "done";
+  orderIngredients: Array<string>;
+  orderCreatedAt: string;
+}
+
+export interface IIngredientForBurgerOrderProps {
+  iconSrc: string;
+  alt?: string;
+  price: number;
+  name: string;
+  count: number;
+}
+
+export interface IIngredientImageProps {
+  iconSrc: string;
+  alt?: string;
+  overflow?: number;
+  extraClass?: string;
 }
 
 export interface IRootState {
@@ -124,6 +218,8 @@ export interface IRootState {
   passwordReducer: IPasswordState;
   loginLogoutReducer: ILoginLogoutState;
   registerReducer: IRegisterState;
+  feedReducer: IFeedState;
+  wsReducer: IWSState;
 }
 
 export type TDragCallback = (dragIndex: number, hoverIndex: number) => void;

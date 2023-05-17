@@ -4,14 +4,11 @@ import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
 import styles from "./burger-ingredients.module.css";
 import Ingredient from "../ingredient/ingredient";
-
-import { useSelector } from "react-redux";
-
-import {IRootState} from "../../utils/interfaces-and-types";
+import { useSelector } from "../../utils/hooks";
 
 const BurgerIngredients: React.FC = () => {
   const { bunList, sauceList, mainList } = useSelector(
-    (store: IRootState) => store.burgerIngredientsReducer
+    (store) => store.burgerIngredientsReducer
   );
 
   const [currentTab, setCurrentTab] = React.useState<string>("bun");

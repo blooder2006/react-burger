@@ -3,26 +3,21 @@ import {
   Button,
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css";
 import "@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css";
-
 import styles from "./pages.module.css";
-
 import { postForgotPassword } from "../services/actions/password-actions";
 import { BASE_URL, FORGOT_PSWD_ENDPOINT } from "../utils/urls";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import { IRootState } from "../utils/interfaces-and-types";
+import { useDispatch, useSelector } from "../utils/hooks";
 
 export const ForgotPasswordPage: React.FC = () => {
   const [currentEmail, setCurrentEmail] = React.useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const { loading, errorForForgot } = useSelector(
-    (store: IRootState) => store.passwordReducer
+    (store) => store.passwordReducer
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,13 +36,13 @@ export const ForgotPasswordPage: React.FC = () => {
     }
   };
 
-  const handleEmailChange = (e: React.ChangeEvent ) => {
+  const handleEmailChange = (e: React.ChangeEvent) => {
     setCurrentEmail((e.target as HTMLInputElement).value);
   };
 
   return (
     <div className={`${styles.inputPage}`}>
-      <p className="text text_type_main-medium">Восстановление пароля</p>
+      <p className={`text text_type_main-medium`}>Восстановление пароля</p>
       <form className={`${styles.form}`} onSubmit={handleSubmit}>
         <div className={`mt-6`}>
           <EmailInput
@@ -57,13 +52,11 @@ export const ForgotPasswordPage: React.FC = () => {
           />
         </div>
         <div className={`mt-6 mb-20`}>
-          <Button htmlType="submit">
-            Восстановить
-          </Button>
+          <Button htmlType="submit">Восстановить</Button>
         </div>
-        </form>
+      </form>
       <div className={`${styles.linkBox}`}>
-        <p className="text text_type_main-default text_color_inactive">
+        <p className={`text text_type_main-default text_color_inactive`}>
           Вспомнили пароль?
         </p>
         <div>

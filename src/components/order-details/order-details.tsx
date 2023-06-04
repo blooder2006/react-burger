@@ -11,7 +11,7 @@ const OrderDetails: React.FC   = () => {
   return (
     <div className={`${styles.orderDetailsMain} mt-30`}>
       { orderNumber ? <>
-      <div className={`${styles.digitsShadow} text_type_digits-large mb-8`}>
+      <div className={`${styles.digitsShadow} text_type_digits-large mb-8`} data-test="order-number">
         {orderNumber}
       </div>
       <div className={`text text_type_main-medium mb-15`}>

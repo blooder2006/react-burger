@@ -44,7 +44,7 @@ const Ingredient: React.FC<IIngredientProps> = ({ ingredient, counter }) => {
           <span>{price}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <div className={`${styles.ingredientName} text text_type_main-default`}>
+        <div className={`${styles.ingredientName} text text_type_main-default`} data-test="burger-ingredient">
           {name}
         </div>
       </div>

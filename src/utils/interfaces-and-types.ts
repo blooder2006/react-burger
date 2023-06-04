@@ -23,15 +23,10 @@ export type TApplicationActions =
   | TFeedActions
   | TWSActions;
 
-/*export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, Action, RootState, TApplicationActions>
->;*/
-
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, RootState, unknown, TApplicationActions>
 >;
 
-//export type AppDispatch = typeof store.dispatch;
 export type AppDispatch = ThunkDispatch<
   RootState,
   unknown,
@@ -180,6 +175,7 @@ export interface IFeedState {
 export interface IWSState {
   wsConnected: boolean;
   message: IMessage | null;
+  messageOrders: IMessage | null;
 
   error?: Event;
 }
@@ -218,7 +214,6 @@ export interface IRootState {
   passwordReducer: IPasswordState;
   loginLogoutReducer: ILoginLogoutState;
   registerReducer: IRegisterState;
-  feedReducer: IFeedState;
   wsReducer: IWSState;
 }
 

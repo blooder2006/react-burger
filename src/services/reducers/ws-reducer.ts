@@ -3,13 +3,15 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
+  WS_GET_MESSAGE_ORDERS
 } from "../actions/ws-actions";
 import { TWSActions } from "../actions/ws-actions";
 import { IWSState } from "../../utils/interfaces-and-types";
 
-const initialState: IWSState = {
+export const initialState: IWSState = {
   wsConnected: false,
   message: null,
+  messageOrders: null,
 };
 
 export const wsReducer = (state = initialState, action: TWSActions) => {
@@ -42,6 +44,14 @@ export const wsReducer = (state = initialState, action: TWSActions) => {
 
         message: action.payload,
       };
+
+      case WS_GET_MESSAGE_ORDERS:
+        return {
+          ...state,
+          error: undefined,
+  
+          messageOrders: action.payload,
+        };
 
     default:
       return state;

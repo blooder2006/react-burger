@@ -27,13 +27,13 @@ const Modal: React.FC<IModalProps> = ({children, onClose }) => {
   }, []);
 
   return ReactDOM.createPortal(
-    <div className={`${styles.contaner}`} onClick={onClose}>
+    <div className={`${styles.contaner}`} onClick={onClose} >
       <ModalOverlay />
       <div
         className={`${styles.modalBack}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={`${styles.closeIcon} mr-10 mt-15`}>
+        <div className={`${styles.closeIcon} mr-10 mt-15`} data-test="close">
           <CloseIcon onClick={onClose} type="primary" />{" "}
         </div>
         {children}

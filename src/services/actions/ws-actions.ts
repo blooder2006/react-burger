@@ -5,6 +5,7 @@ export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUC
 export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
 export const WS_GET_MESSAGE: 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE';
+export const WS_GET_MESSAGE_ORDERS: 'WS_GET_MESSAGE_ORDERS' = 'WS_GET_MESSAGE_ORDERS';
 export const WS_SEND_MESSAGE: 'WS_SEND_MESSAGE' = 'WS_SEND_MESSAGE';
 
 export interface IWSConnectionStart {
@@ -29,6 +30,11 @@ export interface IWSConnectionStart {
     readonly type: typeof WS_GET_MESSAGE;
     readonly payload: IMessage;
   }
+
+  export interface IWSGetMessageOrdersAction {
+    readonly type: typeof WS_GET_MESSAGE_ORDERS;
+    readonly payload: IMessage;
+  }
   
   export interface IWSSendMessageAction {
     readonly type: typeof WS_SEND_MESSAGE;
@@ -41,7 +47,8 @@ export interface IWSConnectionStart {
     | IWSConnectionErrorAction
     | IWSConnectionClosedAction
     | IWSGetMessageAction
-    | IWSSendMessageAction;
+    | IWSSendMessageAction
+    | IWSGetMessageOrdersAction;
 
 export type TWSStoreActions = {
     wsInit: typeof  WS_CONNECTION_START,
@@ -50,5 +57,6 @@ export type TWSStoreActions = {
     onClose: typeof WS_CONNECTION_CLOSED,
     onError: typeof  WS_CONNECTION_ERROR,
     onMessage: typeof  WS_GET_MESSAGE,
+    onMessageOrders: typeof  WS_GET_MESSAGE_ORDERS,
     };
       

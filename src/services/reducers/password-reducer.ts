@@ -10,7 +10,7 @@ import {
 import type { TPasswordActions } from "../actions/password-actions";
 import { IPasswordState } from "../../utils/interfaces-and-types";
 
-const initialState: IPasswordState = {
+export const initialState: IPasswordState = {
   messageForForgot: null,
   messageForReset: null,
   loading: false,

@@ -25,13 +25,24 @@ const BurgerDetails: React.FC = () => {
   const background: IBackground = location.state && location.state.background;
   const dispatch = useDispatch();
   let wsUrl: string = "";
+  let isForOrders: boolean;
+
+  if (location.pathname.includes("/profile/orders")) {
+ 
+    isForOrders = true;
+  } else {
+   
+    isForOrders = false;
+  }
 
   if (!background) {
     if (location.pathname.includes("/profile/orders")) {
       wsUrl = `${USER_ORDERS_ENDPOINT}?token=${getCookie("accessToken")}`;
+      isForOrders = true;
     }
     if (location.pathname.includes("/feed")) {
       wsUrl = FEED_ENDPOINT;
+      isForOrders = false;
     }
   }
 
@@ -50,7 +61,7 @@ const BurgerDetails: React.FC = () => {
   }, [location]);
 
   let orders;
-  const message = useSelector((store) => store.wsReducer.message);
+  const message = useSelector((store) => isForOrders ? store.wsReducer.messageOrders : store.wsReducer.message);
 
   if (message) {
     orders = message.orders;

@@ -7,7 +7,7 @@ import {
 import type { TIngredientsActions } from "../actions/ingredients-actions";
 import { IGetAllIngredientsState } from "../../utils/interfaces-and-types";
 
-const initialState: IGetAllIngredientsState = {
+export const initialState: IGetAllIngredientsState = {
   allIngredients: [],
   loading: false,
   error: null,

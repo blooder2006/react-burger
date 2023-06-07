@@ -7,7 +7,7 @@ import {
 import type { TOrderActions } from "../actions/order-actions";
 import { IOrderState } from "../../utils/interfaces-and-types";
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
   orderNumber: null,
   loading: false,
   error: null,

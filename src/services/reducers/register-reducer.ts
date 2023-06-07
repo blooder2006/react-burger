@@ -7,7 +7,7 @@ import {
 import type { TAuthActions } from "../actions/auth-actions";
 import { IRegisterState } from "../../utils/interfaces-and-types";
 
-const initialState: IRegisterState = {
+export const initialState: IRegisterState = {
   loading: false,
   accessToken: null,
   refreshToken: null,

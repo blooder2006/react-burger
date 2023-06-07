@@ -8,7 +8,7 @@ import {
 import type { TUserActions } from "../actions/user-actions";
 import { IProfileState } from "../../utils/interfaces-and-types";
 
-const initialState: IProfileState = {
+export const initialState: IProfileState = {
   userProfile: null,
   isAuthChecked: false,
   error: null

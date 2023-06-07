@@ -18,6 +18,7 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
+  WS_GET_MESSAGE_ORDERS
 } from "./services/actions/ws-actions";
 
 const wsActions: TWSStoreActions = {
@@ -27,6 +28,7 @@ const wsActions: TWSStoreActions = {
   onClose: WS_CONNECTION_CLOSED,
   onError: WS_CONNECTION_ERROR,
   onMessage: WS_GET_MESSAGE,
+  onMessageOrders: WS_GET_MESSAGE_ORDERS,
 };
 
 export const store = createStore(

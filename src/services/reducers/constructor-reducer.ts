@@ -9,7 +9,7 @@ import {
 import type { TIngredientsActions } from "../actions/ingredients-actions";
 import { IConstructorState } from "../../utils/interfaces-and-types";
 
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
   selectedIngredients: [],
   selectedBun: {} as any,
   totalPrice: 0,

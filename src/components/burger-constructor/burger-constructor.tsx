@@ -158,17 +158,19 @@ const BurgerConstructor: React.FC = () => {
       <section
         ref={dropTargerRef}
         className={`${isHover ? styles.onHover : ""}`}
+        data-test="drop-target"
       >
-        <div className={`${appStyles.alignRight} mr-4`}>
+        <div className={`${appStyles.alignRight} mr-4`} >
           {Object.keys(selectedBun).length > 0 ? (
-            <ConstructorElement
+            <div data-test="top-bun"><ConstructorElement
               key={selectedBun._id}
               type="top"
               isLocked={true}
               text={`${selectedBun.name} (верх)`}
               price={selectedBun.price}
               thumbnail={selectedBun.image}
-            />
+              
+            /></div>
           ) : selectedIngredients.length > 0 ? (
             <div className={`${appStyles.App} text text_type_main-default`}>
               Пожалуйста, добавьте к заказу булку
@@ -180,12 +182,13 @@ const BurgerConstructor: React.FC = () => {
           {selectedIngredients.length > 0 ? (
             selectedIngredients.map((elem, index: number) => {
               return (
-                <ConstructorElementWrapper
-                  key={elem.dragId}
+                <div data-test="main" key={elem.dragId}><ConstructorElementWrapper
+                  
                   index={index}
                   moveCard={moveCard}
                   item={elem}
-                />
+                  
+                /></div>
               );
             })
           ) : (
@@ -195,16 +198,17 @@ const BurgerConstructor: React.FC = () => {
           )}
         </div>
 
-        <div className={`${appStyles.alignRight} mr-4`}>
+        <div className={`${appStyles.alignRight} mr-4`} >
           {Object.keys(selectedBun).length > 0 ? (
-            <ConstructorElement
+            <div data-test="bottom-bun"><ConstructorElement
               key={selectedBun._id}
               type="bottom"
               isLocked={true}
               text={`${selectedBun.name} (низ)`}
               price={selectedBun.price}
               thumbnail={selectedBun.image}
-            />
+              
+            /></div>
           ) : null}
         </div>
       </section>
@@ -221,6 +225,7 @@ const BurgerConstructor: React.FC = () => {
           size="large"
           type="primary"
           onClick={handleOpenModal}
+          data-test="make-order"
           {...(Object.keys(selectedBun).length === 0 ? { disabled: true } : {})}
         >
           Оформить заказ

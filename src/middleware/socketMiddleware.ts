@@ -14,7 +14,7 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
     return (next) => (action: TApplicationActions) => {
       const { dispatch } = store;
       const { type } = action;
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
+      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage, onMessageOrders } =
         wsActions;
 
       if (type === wsInit) {
@@ -31,15 +31,26 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
 
         socket.onmessage = (event) => {
           const { data } = event;
+          
+          const eventTarget: any = event.target;
+          
           const parsedData: IMessageResponse = JSON.parse(data);
           const { success, ...restParsedData } = parsedData;
 
+          eventTarget.url.includes("?token=") ?
           dispatch({
+            type: onMessageOrders,
+            payload: {
+              ...restParsedData,
+            },
+          }) : dispatch({
             type: onMessage,
             payload: {
               ...restParsedData,
             },
           });
+
+
         };
 
         socket.onclose = (event) => {

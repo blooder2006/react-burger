@@ -22,19 +22,24 @@ const OrdersList: React.FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   let wsUrl: string;
+  let isForOrders: boolean;
 
-  location.pathname === "/profile/orders"
-    ? (wsUrl = `${USER_ORDERS_ENDPOINT}?token=${getCookie("accessToken")}`)
-    : (wsUrl = FEED_ENDPOINT);
+  if (location.pathname === "/profile/orders") {
+    wsUrl = `${USER_ORDERS_ENDPOINT}?token=${getCookie("accessToken")}`;
+    isForOrders = true;
+  } else {
+    wsUrl = FEED_ENDPOINT;
+    isForOrders = false;
+  }
 
   React.useEffect(() => {
-    (async () => {
+    /*(async () => {
       const { refreshToken, accessToken } = await refreshTokenRequest(
         BASE_URL,
         REFRESH_TOKEN_ENDPOINT
       );
-    saveTokens(refreshToken, accessToken.split("Bearer ")[1]);
-    })();
+      saveTokens(refreshToken, accessToken.split("Bearer ")[1]);
+    })();*/
 
     dispatch({
       type: WS_CONNECTION_START,
@@ -47,9 +52,9 @@ const OrdersList: React.FC = () => {
   }, [location]);
 
   let orders;
-
-  const message = useSelector((store) => store.wsReducer.message);
-
+  
+  const message = useSelector((store) => isForOrders ? store.wsReducer.messageOrders : store.wsReducer.message);
+  
   if (message) {
     orders = message.orders;
   }

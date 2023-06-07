@@ -10,7 +10,7 @@ import {
 import type { TAuthActions } from "../actions/auth-actions";
 import { ILoginLogoutState } from "../../utils/interfaces-and-types";
 
-const initialState: ILoginLogoutState = {
+export const initialState: ILoginLogoutState = {
   loading: false,
   accessToken: null,
   refreshToken: null,

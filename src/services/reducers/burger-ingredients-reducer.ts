@@ -8,7 +8,7 @@ import {
 import type { TIngredientsActions } from "../actions/ingredients-actions";
 import { IIngredientsState } from "../../utils/interfaces-and-types";
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
   bunList: [],
   sauceList: [],
   mainList: [],
